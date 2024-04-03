@@ -21,4 +21,7 @@ export class LoginComponent {
       this.password = '';
     }
   }
+  goToSignup(){
+    this.router.navigate(['/signup']);
+  }
 }
