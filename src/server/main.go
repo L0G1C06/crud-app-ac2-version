@@ -11,14 +11,19 @@ import (
 	"github.com/rs/cors"
 )
 
-type User struct {
+type RegisterUser struct {
 	Email    string `json:"email"`
 	Username string `json:"username"`
 	Password string `json:"password"`
 }
 
+type LoginUser struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+
 func main() {
-	db, err := sql.Open("sqlite3", "/home/weber/projects/faculdade/crud-app/src/server/database/signup.db")
+	db, err := sql.Open("sqlite3", "./database/signup.db")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -33,13 +38,13 @@ func main() {
 			return
 		}
 
-		var user User
-		if err := DecodeJSONBody(w, r, &user); err != nil {
+		var regUser RegisterUser
+		if err := DecodeJSONBody(w, r, &regUser); err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 
-		err := saveUser(db, user)
+		err := saveUser(db, regUser)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -47,10 +52,30 @@ func main() {
 
 		fmt.Fprintf(w, "User successfuly registered!")
 	})
+	mux.HandleFunc("/api/login", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodPost {
+			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+			return
+		}
+
+		var logUser LoginUser
+		if err := DecodeJSONBody(w, r, &logUser); err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+
+		err := retrieveUser(db, logUser)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		fmt.Fprintf(w, "Login data requested successfully")
+	})
 	c := cors.New(cors.Options{
-		AllowedOrigins: []string{"http://localhost:4200"},
-		AllowedMethods: []string{"GET", "POST", "OPTIONS"},
-		AllowedHeaders: []string{"Origin", "Content-Type", "Accept", "Authorization"},
+		AllowedOrigins:   []string{"http://localhost:4200"},
+		AllowedMethods:   []string{"GET", "POST", "OPTIONS"},
+		AllowedHeaders:   []string{"Origin", "Content-Type", "Accept", "Authorization"},
 		AllowCredentials: true,
 	})
 	handler := c.Handler(mux)
@@ -73,15 +98,29 @@ func createUsersTable(db *sql.DB) {
 	}
 }
 
-func saveUser(db *sql.DB, user User) error {
+func saveUser(db *sql.DB, regUser RegisterUser) error {
 	stmt, err := db.Prepare("INSERT INTO users(email, username, password) VALUES (?, ?, ?)")
 	if err != nil {
 		return err
 	}
 	defer stmt.Close()
 
-	_, err = stmt.Exec(user.Email, user.Username, user.Password)
+	_, err = stmt.Exec(regUser.Email, regUser.Username, regUser.Password)
 	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func retrieveUser(db *sql.DB, logUser LoginUser) error {
+	stmt, err := db.Prepare("SELECT username, password FROM users WHERE username = ?")
+	if err != nil{
+		return err
+	}
+	defer stmt.Close()
+
+	_, err = stmt.Exec(logUser.Username)
+	if err != nil{
 		return err
 	}
 	return nil
