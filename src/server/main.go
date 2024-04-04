@@ -70,7 +70,7 @@ func main() {
 			return
 		}
 
-		fmt.Fprintf(w, "Login data requested successfully")
+		fmt.Fprintf(w, "User loged in sucessfully!")
 	})
 	c := cors.New(cors.Options{
 		AllowedOrigins:   []string{"http://localhost:4200"},
@@ -113,17 +113,22 @@ func saveUser(db *sql.DB, regUser RegisterUser) error {
 }
 
 func retrieveUser(db *sql.DB, logUser LoginUser) error {
-	stmt, err := db.Prepare("SELECT username, password FROM users WHERE username = ?")
-	if err != nil{
-		return err
-	}
-	defer stmt.Close()
+    row := db.QueryRow("SELECT username, password FROM users WHERE username = ?", logUser.Username)
 
-	_, err = stmt.Exec(logUser.Username)
-	if err != nil{
-		return err
-	}
-	return nil
+    var username, password string
+    err := row.Scan(&username, &password)
+    if err != nil {
+        if err == sql.ErrNoRows {
+            return fmt.Errorf("incorrect username or password")
+        }
+        return err
+    }
+
+    if password != logUser.Password {
+        return fmt.Errorf("incorrect username or password")
+    }
+
+    return nil
 }
 
 func DecodeJSONBody(w http.ResponseWriter, r *http.Request, data interface{}) error {
