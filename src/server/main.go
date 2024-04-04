@@ -9,6 +9,7 @@ import (
 
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/rs/cors"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type RegisterUser struct {
@@ -44,7 +45,14 @@ func main() {
 			return
 		}
 
-		err := saveUser(db, regUser)
+		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(regUser.Password), bcrypt.DefaultCost)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		regUser.Password = string(hashedPassword)
+
+		err = saveUser(db, regUser)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -113,22 +121,17 @@ func saveUser(db *sql.DB, regUser RegisterUser) error {
 }
 
 func retrieveUser(db *sql.DB, logUser LoginUser) error {
-    row := db.QueryRow("SELECT username, password FROM users WHERE username = ?", logUser.Username)
+	var storedPassword string
+	err := db.QueryRow("SELECT password FROM users WHERE username = ?", logUser.Username).Scan(&storedPassword)
+	if err != nil {
+		return fmt.Errorf("incorrect username or password")
+	}
 
-    var username, password string
-    err := row.Scan(&username, &password)
-    if err != nil {
-        if err == sql.ErrNoRows {
-            return fmt.Errorf("incorrect username or password")
-        }
-        return err
-    }
+	if err := bcrypt.CompareHashAndPassword([]byte(storedPassword), []byte(logUser.Password)); err != nil {
+		return fmt.Errorf("incorrect username or password")
+	}
 
-    if password != logUser.Password {
-        return fmt.Errorf("incorrect username or password")
-    }
-
-    return nil
+	return nil
 }
 
 func DecodeJSONBody(w http.ResponseWriter, r *http.Request, data interface{}) error {
