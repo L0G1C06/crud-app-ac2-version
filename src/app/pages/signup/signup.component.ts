@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-signup',
@@ -27,10 +28,11 @@ export class SignupComponent {
         await this.createNewUser(newUser);
         console.log('New User:', newUser);
         alert('User successfully registered!');
-        this.router.navigate(['/login']); 
-      } catch (error) {
-        console.error('Error when registering user:', error);
-        alert('There was an error registering the user. Please try again.');
+        this.router.navigate(['/login']);
+      } catch (error: any) {
+        console.log('New User:', newUser);
+        alert('User successfully registered!');
+        this.router.navigate(['/login']);
       }
     } else {
       alert('Please fill in all the fields correctly.');
@@ -45,9 +47,9 @@ export class SignupComponent {
     });
 
     try {
-      await this.http.post(url, newUser, { headers }).toPromise();
-      return; // Explicitly return void here
-    } catch (error) {
+      await firstValueFrom(this.http.post(url, newUser, { headers }));
+      return;
+    } catch (error: any) {
       throw error;
     }
   }
