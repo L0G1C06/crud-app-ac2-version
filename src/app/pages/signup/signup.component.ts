@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-signup',
@@ -7,31 +8,28 @@ import { Router } from '@angular/router';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
+  userForm: FormGroup;
 
   email: string = '';
   user: string = '';
   password: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private formBuilder: FormBuilder) {
+    this.userForm = this.formBuilder.group({
+      user: ['', Validators.required],
+      email: [''],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]]
+    });
+  }
 
-  signup() {
-    if (this.email && this.user && this.password && this.password.length >= 8) {
-      const newUser = {
-        email: this.email,
-        username: this.user,
-        password: this.password
-      };
-
-      this.createNewUser(newUser).then(() => {
-        console.log('New User:', newUser);
-        alert('User successfully registered!');
-        this.router.navigate(['/login']); 
-      }).catch(error => {
-        console.error('Error when registering user:', error);
-        alert('There was an error registering the user. Please try again.');
-      });
+  signup(): void {
+    if (this.userForm.valid){
+      console.log('New User');
+      alert('User successfully registered!');
+      this.router.navigate(['/login']);
     } else {
-      alert('Please fill in all the fields correctly.');
+      alert('Please fill all the fields correctly.');
     }
   }
 
