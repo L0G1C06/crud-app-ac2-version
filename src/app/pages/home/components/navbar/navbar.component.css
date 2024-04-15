@@ -1,0 +1,36 @@
+.navbar {
+    background-color: #f8f9fa;
+    padding: 10px 0;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: #343a40;
+    font-size: 1.5rem;
+    text-decoration: none;
+}
+
+.navbar-nav {
+    padding-left: 15px;
+}
+
+.nav-link {
+    color: #343a40;
+    margin-right: 10px;
+    text-decoration: none;
+}
+
+.nav-link.active {
+    font-weight: bold;
+}
+
+.btn-outline-danger {
+    margin-right: 5px;
+    background-color: hsl(0, 100%, 50%);
+    color: #fff; 
+    border: white;
+    padding: 12px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative; 
+}

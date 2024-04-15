@@ -1,25 +1,35 @@
 .action-button {
     margin-right: 5px;
     background-color: #007bff;
-    color: #fff; /* Define a cor do texto como branca */
+    color: #fff; 
     border: none;
-    padding: 15px 20px;
+    padding: 12px 10px;
     border-radius: 5px;
     cursor: pointer;
-    position: relative; /* Adiciona posição relativa para poder posicionar o ícone */
+    position: relative; 
   }
   
   .action-button i {
-    position: absolute; /* Posiciona o ícone de forma absoluta dentro do botão */
-    top: 50%; /* Alinha o ícone verticalmente ao centro */
-    left: 13px; /* Define um espaçamento à esquerda para o ícone */
-    transform: translateY(-50%); /* Ajusta a posição vertical do ícone */
+    position: absolute; 
+    top: 50%; 
+    left: 13px; 
+    transform: translateY(-50%);
   }
   
-  /* Estilo específico para o ícone do lápis dentro do botão de editar */
   .action-button.edit i {
-    color: #007bff; /* Define a cor do ícone como azul */
-    background-color: #fff; /* Define o fundo do ícone como branco */
-    border-radius: 50%; /* Torna o ícone redondo */
-    padding: 5px; /* Ajusta o espaçamento interno do ícone */
+    color: #007bff;
+    background-color: #fff; 
+    border-radius: 50%; 
+    padding: 5px; 
+  }
+
+  .btn-primary{
+    margin-right: 5px;
+    background-color: #007bff;
+    color: #fff; 
+    border: none;
+    padding: 12px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative; 
   }
