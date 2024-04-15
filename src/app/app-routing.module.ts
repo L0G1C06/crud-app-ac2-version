@@ -5,6 +5,8 @@ import { SignupComponent } from './pages/signup/signup.component';
 import { HomeComponent } from './pages/home/home.component';
 import { UsersComponent } from './pages/home/components/users/users.component';
 import { WelcomeComponent } from './pages/home/components/welcome/welcome.component';
+import { AddUserComponent } from './pages/home/components/users/add-user/add-user.component';
+import { EditUserComponent } from './pages/home/components/users/edit-user/edit-user.component';
 
 const routes: Routes = [
   {path: "", redirectTo: "/login", pathMatch: 'full'},
@@ -13,7 +15,9 @@ const routes: Routes = [
     path: "app", component: HomeComponent,
     children: [
       {path: "", component: WelcomeComponent},
-      {path: "users", component: UsersComponent}
+      {path: "users", component: UsersComponent},
+      {path: "users/add", component: AddUserComponent},
+      {path: "users/edit", component: EditUserComponent}
     ]
   },
   {path: "signup", component: SignupComponent}

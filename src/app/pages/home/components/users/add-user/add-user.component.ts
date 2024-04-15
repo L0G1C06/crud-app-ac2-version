@@ -3,25 +3,24 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css']
+  selector: 'app-add-user',
+  templateUrl: './add-user.component.html',
+  styleUrls: ['./add-user.component.css']
 })
-export class SignupComponent {
-  userForm: FormGroup;
+export class AddUserComponent {
+  adduserForm: FormGroup;
 
-  email: string = '';
   user: string = '';
+  email: string = '';
   password: string = '';
 
-  constructor(private router: Router, private formBuilder: FormBuilder) {
-    this.userForm = this.formBuilder.group({
+  constructor(private router: Router, private formBuilder: FormBuilder){
+    this.adduserForm = this.formBuilder.group({
       user: ['', Validators.required],
       email: [''],
-      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]],
-      confirmPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]]
-    }, { validator: this.passwordMatchValidator
-    });
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]]
+    }, { validator: this.passwordMatchValidator });
   }
 
   passwordMatchValidator(formGroup: FormGroup){
@@ -35,13 +34,13 @@ export class SignupComponent {
     }
   }
 
-  signup(): void {
-    if (this.userForm.valid) {
+  addUser(): void {
+    if (this.adduserForm.valid) {
       console.log('New User');
-      alert('Usuário registrado com sucesso!');
-      this.router.navigate(['/login']);
+      alert('Usuário adicionado com sucesso!');
+      this.router.navigate(['/app']);
     } else {
-      const confirmPasswordControl = this.userForm.get('confirmPassword');
+      const confirmPasswordControl = this.adduserForm.get('confirmPassword');
       if (confirmPasswordControl?.hasError('mismatch')) {
         alert('Senhas precisam ser iguais!');
       } else {

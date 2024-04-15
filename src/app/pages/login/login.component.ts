@@ -16,7 +16,7 @@ export class LoginComponent {
     if (this.user === 'admin' && this.password === '1234'){
       this.router.navigate(['/app'])
     } else {
-      alert('User or password are incorrect!')
+      alert('Usuário ou senha estão incorretos!')
       this.user = '';
       this.password = '';
     }

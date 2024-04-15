@@ -12,6 +12,8 @@ import { NavbarComponent } from './pages/home/components/navbar/navbar.component
 import { UsersComponent } from './pages/home/components/users/users.component';
 import { WelcomeComponent } from './pages/home/components/welcome/welcome.component';
 import { RouterModule } from '@angular/router';
+import { AddUserComponent } from './pages/home/components/users/add-user/add-user.component';
+import { EditUserComponent } from './pages/home/components/users/edit-user/edit-user.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { RouterModule } from '@angular/router';
     HomeComponent,
     NavbarComponent,
     UsersComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    AddUserComponent,
+    EditUserComponent
   ],
   imports: [
     BrowserModule,
