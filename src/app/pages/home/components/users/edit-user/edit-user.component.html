@@ -1,32 +1,46 @@
 <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <h1 class="text-center">Editar Usuário</h1>
-        <form [formGroup]="edituserForm" (ngSubmit)="editUser()" class="mt-4">
-          <div class="form-group">
-            <label for="email">E-mail:</label>
-            <input type="email" id="email" formControlName="email" class="form-control" required>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <h1 class="text-center">Editar Usuário</h1>
+      <form [formGroup]="edituserForm" (ngSubmit)="editUser()" class="mt-4">
+        <div class="form-group">
+          <label for="user">Nome:</label>
+          <input type="text" id="user" formControlName="user" class="form-control" required>
+          <div *ngIf="edituserForm.get('user')?.touched && edituserForm.get('user')?.invalid" class="text-danger">
+            Nome é um campo obrigatório.
           </div>
-          <div class="form-group">
-            <label for="user">Usuário:</label>
-            <input type="text" id="user" formControlName="user" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="email">E-mail:</label>
+          <input type="email" id="email" formControlName="email" class="form-control" required>
+          <div *ngIf="edituserForm.get('email')?.touched && edituserForm.get('email')?.invalid" class="text-danger">
+            E-mail é obrigatório e deve ser um e-mail válido.
           </div>
-          <div class="form-group">
-            <label for="password">Senha:</label>
-            <input type="password" id="password" formControlName="password" class="form-control" required minlength="8">
+        </div>
+        <div class="form-group">
+          <label for="role">Função:</label>
+          <select id="role" formControlName="role" class="form-control" required>
+            <option value="" disabled selected>Selecione uma função</option>
+            <option value="Engenheiro de FE">Engenheiro de FE</option>
+            <option value="Engenheiro de BE">Engenheiro de BE</option>
+            <option value="Analista de dados">Analista de dados</option>
+            <option value="Líder Técnico">Líder Técnico</option>
+          </select>
+          <div *ngIf="edituserForm.get('role')?.touched && edituserForm.get('role')?.invalid" class="text-danger">
+            Função é um campo obrigatório.
           </div>
-          <div class="form-group">
-            <label for="confirmPassword">Confirmação de Senha:</label>
-            <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Senha:</label>
+          <input type="password" id="password" formControlName="password" class="form-control" required minlength="6" maxlength="15">
+          <div *ngIf="edituserForm.get('password')?.touched && edituserForm.get('password')?.invalid" class="text-danger">
+            Senha é um campo obrigatório.
           </div>
-          <div>
-            <h2></h2>
-          </div>
-          <div class="text-center">
-          <button type="submit" class="btn btn-primary btn-block">Editar</button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary btn-block" [disabled]="edituserForm.invalid">Adicionar</button>
+        </div>
+      </form>
     </div>
   </div>
-  
+</div>
