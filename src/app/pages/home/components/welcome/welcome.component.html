@@ -6,3 +6,27 @@
         </div>
     </div>
 </div>
+<div>
+    <h3>Stats</h3>
+    <p>Quantidade de usuários: {{ lengthusers.length }}</p>
+</div>
+<div>
+    <h2></h2>
+</div>
+<div>
+    <p>Quantidade de usuários por função</p>
+    <table>
+        <thead>
+          <tr>
+            <th>Função</th>
+            <th>Quantidade de Usuários</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let entry of roleusers | keyvalue">
+            <td>{{ entry.key }}</td>
+            <td>{{ entry.value }}</td>
+          </tr>
+        </tbody>
+      </table>      
+</div>
