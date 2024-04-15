@@ -4,5 +4,35 @@
             <h1>Bem vindo à página de Users</h1>
             <h2>Aqui pode começar a criar a sua fantástica aplicação angular</h2>
         </div>
+        <div>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+            <tbody>
+                <tr *ngFor="let user of users">
+                    <td>{{ user.user }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.role }}</td>
+                    <td>
+                        <button class="action-button" (click)="editUserId(user.user, user.email)">
+                            <i class="fas fa-pencil-alt"></i>
+                        </button>
+                        <button class="action-button" (click)="removeUser(user.user)">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary" routerLink="/app/users/add">NEW</button>
+        </div>
     </div>
 </div>

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -7,16 +7,26 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './edit-user.component.html',
   styleUrl: './edit-user.component.css'
 })
-export class EditUserComponent {
+export class EditUserComponent implements OnInit {
   edituserForm: FormGroup;
 
-  constructor(private router: Router, private formBuilder: FormBuilder) {
+  constructor(private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder) {
     this.edituserForm = this.formBuilder.group({
       user: ['', Validators.required], 
       email: ['', [Validators.required, Validators.email]],  
       role: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]], 
     });
+  }
+
+  ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.edituserForm.patchValue({
+        user: params['user'],
+        email: params['email'],
+        role: params['role']
+      });
+    })
   }
 
   get user() { return this.edituserForm.get('user'); } 
