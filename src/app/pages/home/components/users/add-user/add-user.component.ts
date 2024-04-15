@@ -10,18 +10,19 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class AddUserComponent {
   adduserForm: FormGroup;
 
-  user: string = '';
-  email: string = '';
-  password: string = '';
-
-  constructor(private router: Router, private formBuilder: FormBuilder){
+  constructor(private router: Router, private formBuilder: FormBuilder) {
     this.adduserForm = this.formBuilder.group({
-      user: ['', Validators.required],
-      email: [''],
-      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]],
-      confirmPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]]
-    }, { validator: this.passwordMatchValidator });
+      user: ['', Validators.required], 
+      email: ['', [Validators.required, Validators.email]],  
+      role: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]], 
+    });
   }
+
+  get user() { return this.adduserForm.get('user'); } 
+  get email() { return this.adduserForm.get('email'); } 
+  get role() { return this.adduserForm.get('role'); } 
+  get password() { return this.adduserForm.get('password'); } 
 
   passwordMatchValidator(formGroup: FormGroup){
     const password = formGroup.get('password')?.value;
@@ -40,12 +41,8 @@ export class AddUserComponent {
       alert('Usuário adicionado com sucesso!');
       this.router.navigate(['/app']);
     } else {
-      const confirmPasswordControl = this.adduserForm.get('confirmPassword');
-      if (confirmPasswordControl?.hasError('mismatch')) {
-        alert('Senhas precisam ser iguais!');
-      } else {
-        alert('Preencha corretamente todos os campos!');
-      }
+      this.adduserForm.markAllAsTouched(); 
+      alert('Preencha corretamente todos os campos!');
     }
   }
 }

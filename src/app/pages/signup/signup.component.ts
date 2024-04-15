@@ -17,7 +17,7 @@ export class SignupComponent {
   constructor(private router: Router, private formBuilder: FormBuilder) {
     this.userForm = this.formBuilder.group({
       user: ['', Validators.required],
-      email: [''],
+      email: ['', Validators.email],
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]]
     }, { validator: this.passwordMatchValidator
