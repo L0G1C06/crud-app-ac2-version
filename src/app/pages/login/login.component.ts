@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -7,21 +8,34 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  user: string = '';
-  password: string = '';
+  loginForm: FormGroup;
 
-  constructor(private router: Router) {}
+  constructor(private formBuilder: FormBuilder, private router: Router) {
+    this.loginForm = this.formBuilder.group({
+      user: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+  }
 
-  login(){
-    if (this.user === 'admin' && this.password === '1234'){
-      this.router.navigate(['/app'])
+  login() {
+    if (this.loginForm.valid) {
+      const { user, password } = this.loginForm.value;
+      if (user === 'admin' && password === '1234') {
+        this.router.navigate(['/app']);
+      } else {
+        alert('Usuário ou senha estão incorretos!');
+        this.resetForm();
+      }
     } else {
-      alert('Usuário ou senha estão incorretos!')
-      this.user = '';
-      this.password = '';
+      alert('Por favor, preencha todos os campos.');
     }
   }
-  goToSignup(){
+
+  resetForm() {
+    this.loginForm.reset();
+  }
+
+  goToSignup() {
     this.router.navigate(['/signup']);
   }
 }
