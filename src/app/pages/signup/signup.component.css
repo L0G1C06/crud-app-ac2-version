@@ -1,10 +1,3 @@
-body {
-    font-family: "Roboto", Arial, sans-serif; 
-    background-color: #df1212;
-    margin: 0;
-    padding: 0;
-}
-
 .container {
     font-family: sans-serif;
     min-width: 500px;
@@ -14,7 +7,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 20px;
-    background-color: #fff;
+    background-color: #0c4b33;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -24,13 +17,8 @@ body {
     }
   }
 
-.form-text-new{
-    font-family: sans-serif;
-    font-size: 12px;
-    padding: 8px;
-}
-
 h1 {
+    color: #f1fff7;
     font-family: sans-serif;
     text-align: center;
     margin-bottom: 20px;
@@ -42,9 +30,10 @@ h1 {
 }
 
 label {
+    color: #f1fff7;
     font-family: sans-serif;
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 input[type="text"],
@@ -57,6 +46,11 @@ input[type="password"] {
     border-radius: 8px;
 }
 
+.form-text-new{
+    font-family: sans-serif;
+    color: #f1fff7 ;
+}
+
 .btn {
     font-family: sans-serif;
     display: block;
@@ -65,12 +59,12 @@ input[type="password"] {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    background-color: #007bff;
+    background-color: #187f58;
     color: #fff;
 }
 
 .btn:hover {
-    background-color: #0056b3;
+    background-color: #44b78b;
 }
 
 .btn-link {

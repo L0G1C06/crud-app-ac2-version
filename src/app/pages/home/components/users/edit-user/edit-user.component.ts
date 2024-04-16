@@ -48,7 +48,7 @@ export class EditUserComponent implements OnInit {
   editUser(): void {
     if (this.edituserForm.valid) {
       console.log('New User');
-      alert('Usuário adicionado com sucesso!');
+      alert('Usuário editado com sucesso!');
       this.router.navigate(['/app']);
     } else {
       this.edituserForm.markAllAsTouched(); 

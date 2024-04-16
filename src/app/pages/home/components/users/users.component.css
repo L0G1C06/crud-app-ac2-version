@@ -1,6 +1,7 @@
 .action-button {
+    font-family: sans-serif;
     margin-right: 5px;
-    background-color: #007bff;
+    background-color: #187f58;
     color: #fff; 
     border: none;
     padding: 12px 10px;
@@ -8,8 +9,33 @@
     cursor: pointer;
     position: relative; 
   }
+
+h1{
+  font-family: sans-serif;
+  padding: 20px;
+  color: #f1fff7;
+}
+
+table{
+  color: #f1fff7;
+  font-family: sans-serif;
+  padding-left: 20px;
+}
+
+th, td {
+  font-family: sans-serif;
+  padding: 7px;
+  text-align: center;
+}
+
+th{
+  font-family: sans-serif;
+  background-color: #44b78b;
+  color: #e1efea;
+}
   
   .action-button i {
+    font-family: sans-serif;
     position: absolute; 
     top: 50%; 
     left: 13px; 
@@ -17,15 +43,17 @@
   }
   
   .action-button.edit i {
-    color: #007bff;
+    font-family: sans-serif;
+    color: #44b78b;
     background-color: #fff; 
     border-radius: 50%; 
     padding: 5px; 
   }
 
-  .btn-primary{
+  .btn-primary { 
+    font-family: sans-serif;
     margin-right: 5px;
-    background-color: #007bff;
+    background-color: #44b78b;
     color: #fff; 
     border: none;
     padding: 12px 10px;

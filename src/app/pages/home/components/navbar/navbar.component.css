@@ -1,0 +1,28 @@
+ul {
+    position: sticky;
+    position: -webkit-sticky;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #0c4b33;
+  }
+  .active {
+    background-color: #3aa67c;
+  }
+  li {
+    float: left;
+  }
+  
+  li a {
+    font-family: sans-serif;
+    display: block;
+    color: #f1fff7;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  li a:hover {
+    background-color: #3aa67c;
+  }

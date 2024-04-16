@@ -4,12 +4,12 @@
       <h1 class="text-center">Sign Up</h1>
       <form [formGroup]="userForm" (ngSubmit)="signup()" class="mt-4">
         <div class="form-group">
-          <label for="email">E-mail:</label>
-          <input type="text" id="email" formControlName="email" class="form-control" required>
-        </div>
-        <div class="form-group">
           <label for="user">Usuário:</label>
           <input type="text" id="user" formControlName="user" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="email">E-mail:</label>
+          <input type="text" id="email" formControlName="email" class="form-control" required>
         </div>
         <div class="form-group">
           <label for="password">Senha:</label>
