@@ -8,7 +8,7 @@ import (
 // Database structure
 type Credentials struct{
 	gorm.Model
-	Username string 
+	Username string `gorm:"primaryKey"`
 	Email string 
 	Password string  // hash in code, before insert into database
 	Role string
