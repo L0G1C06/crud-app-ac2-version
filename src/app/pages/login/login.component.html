@@ -1,29 +1,21 @@
 <div class="container">
-    <div class="container">
-      <div class="col-md-6">
-        <h1 class="text-center">Login</h1>
-        <form [formGroup]="loginForm" (ngSubmit)="login()" class="mt-4">
-          <div class="form-group">
-            <label for="user">Usuário:</label>
-            <input type="text" id="user" formControlName="user" class="form-control" required>
-          </div>
-          <div class="form-group">
-            <label for="password">Senha:</label>
-            <input type="password" id="password" formControlName="password" class="form-control">
-          </div>
-          <div>
-            <h2></h2>
-          </div>
-          <div class="text-center">
-          <button type="submit" class="btn btn-primary btn-block">Login</button>
-          </div>
-          <div>
-            <h2></h2>
-          </div>
-          <div class="text-center">
-            <button type="submit" class="btn btn-primary btn-block" routerLink="/signup">Sign Up</button>
-          </div>
-        </form>
+  <div class="col-md-6">
+    <h1 class="text-center">Login</h1>
+    <form (ngSubmit)="onSubmit()" [formGroup]="loginForm" class="mt-4">
+      <div class="form-group">
+        <label for="user">Usuário:</label>
+        <input type="text" id="user" formControlName="user" class="form-control" required>
       </div>
+      <div class="form-group">
+        <label for="password">Senha:</label>
+        <input type="password" id="password" formControlName="password" class="form-control" required>
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary btn-block">Login</button>
+      </div>
+    </form>
+    <div class="text-center mt-3">
+      <button class="btn btn-link" routerLink="/signup">Sign Up</button>
     </div>
   </div>
+</div>

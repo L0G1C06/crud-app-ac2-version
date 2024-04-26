@@ -14,6 +14,7 @@ import { WelcomeComponent } from './pages/home/components/welcome/welcome.compon
 import { RouterModule } from '@angular/router';
 import { AddUserComponent } from './pages/home/components/users/add-user/add-user.component';
 import { EditUserComponent } from './pages/home/components/users/edit-user/edit-user.component';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,9 @@ import { EditUserComponent } from './pages/home/components/users/edit-user/edit-
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    provideHttpClient(withFetch()),
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
