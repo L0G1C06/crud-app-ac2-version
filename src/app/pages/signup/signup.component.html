@@ -2,7 +2,7 @@
   <div class="container">
     <div class="col-md-6">
       <h1 class="text-center">Sign Up</h1>
-      <form [formGroup]="userForm" (ngSubmit)="signup()" class="mt-4">
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="mt-4">
         <div class="form-group">
           <label for="user">Usuário:</label>
           <input type="text" id="user" formControlName="user" class="form-control" required>
