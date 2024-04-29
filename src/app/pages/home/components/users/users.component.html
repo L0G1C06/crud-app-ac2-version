@@ -1,41 +1,42 @@
 <div class="container-fluid">
-    <div class="row align-items-center text-center full-height">
-        <div class="col">
-            <h1>Bem vindo à página de Users</h1>
-        </div>
-        <div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>User</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-            <tbody>
-                <tr *ngFor="let user of users">
-                    <td>{{ user.user }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.role }}</td>
-                    <td>
-                        <button class="action-button" (click)="editUserId(user.user, user.email)">
-                            <i class="fas fa-pencil-alt"></i> Editar
-                        </button>
-                        <button class="action-button" (click)="removeUser(user.user)">
-                            <i class="fas fa-times"></i>Remover
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        <button type="submit" class="btn btn-primary" routerLink="/app/users/add">NEW</button>
-                    </td>
-                </tr>
-            </tbody>
-            </table>
+  <div class="row align-items-center text-center full-height">
+    <div class="col">
+      <h1>Bem vindo à página de Users</h1>
     </div>
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{ user.Username }}</td>
+            <td>{{ user.Email }}</td>
+            <td>{{ user.Role }}</td>
+            <td>
+              <button class="action-button" (click)="editUser(user.ID, user.Username, user.Email, user.Role)">
+                <i class="fas fa-pencil-alt"></i> Editar
+              </button>
+              <button class="action-button" (click)="removeUser(user.ID)">
+                <i class="fas fa-times"></i>Remover
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+              <button type="submit" class="btn btn-primary" routerLink="/app/users/add">NEW</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

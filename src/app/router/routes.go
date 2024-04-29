@@ -21,6 +21,7 @@ func InitializeRoutes(router *gin.Engine){
 		v1.DELETE("/user/delete", handler.DeleteUserHandler)
 		v1.PUT("/user/update", handler.UpdateUserHandler)
 		v1.GET("/users/list", handler.ListUsersHandler)
+		v1.GET("/users/count", handler.CountUsersHandler)
 	}
 
 	// Initialize swagger

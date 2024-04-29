@@ -36,7 +36,7 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
     ReactiveFormsModule
   ],
   providers: [
-    provideHttpClient(withFetch()),
+    provideHttpClient(withFetch())
   ],
   bootstrap: [AppComponent]
 })

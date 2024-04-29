@@ -1,13 +1,14 @@
 <div class="container-fluid">
     <div class="row align-items-center text-center full-height">
-        <div class="col">
-            <h1>Bem-vindo</h1>
-        </div>
+      <div class="col">
+        <h1>Bem-vindo</h1>
+      </div>
     </div>
-</div>
-<div>
-    <h2>Quantidade de usuários: {{ lengthusers.length }}</h2>
-</div>
+  </div>
+  
+  <div>
+    <h2>Total de usuários cadastrados: {{ totalUsers }}</h2>
+  </div>  
 <div>
     <h2></h2>
 </div>
@@ -20,11 +21,5 @@
             <th>Quantidade de Usuários</th>
           </tr>
         </thead>
-        <tbody>
-          <tr *ngFor="let entry of roleusers | keyvalue">
-            <td>{{ entry.key }}</td>
-            <td>{{ entry.value }}</td>
-          </tr>
-        </tbody>
       </table>      
 </div>

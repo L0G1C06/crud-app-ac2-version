@@ -51,7 +51,7 @@ export class AddUserComponent {
       this.addUser(user, email, role, password).subscribe(
         () => {
           alert('Usuário adicionado com sucesso!');
-          this.router.navigate(['/app']);
+          this.router.navigate(['/app/users']);
         },
         () => {
           alert('Usuário adicionado com sucesso!');
