@@ -40,7 +40,7 @@ func DeleteUserHandler(ctx *gin.Context) {
 		return
 	}
 
-	// Delete User
+	//// Delete User
 	if err := db.Delete(&signupCredentials).Error; err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("error deleting user with username: %s", username)})
 		return

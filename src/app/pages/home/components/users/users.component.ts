@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserService, User } from './users.service';
 
 @Component({
@@ -11,6 +11,7 @@ import { UserService, User } from './users.service';
 export class UsersComponent implements OnInit {
   users: User[] = [];
   isLoading = true;
+  deleteUrl = 'http://0.0.0.0:8000/api/v1/user/delete'
 
   constructor(
     private http: HttpClient,
@@ -36,9 +37,26 @@ export class UsersComponent implements OnInit {
     );
   }
 
-  removeUser(id: number) {
-    this.users = this.users.filter(user => user.ID !== id);
-    // Adicione a requisição HTTP para excluir o usuário do servidor, se necessário
+  removeUser(username: string) {
+    const deleteUrl = 'http://0.0.0.0:8000/api/v1/user/delete'; // Endpoint da API para excluir usuário
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+  
+    // Monta o corpo da requisição DELETE
+    const body = {
+      username: username
+    };
+    this.users = this.users.filter(user => user.Username !== username);
+  
+    // Envia a requisição DELETE para a API
+    this.http.delete(deleteUrl, { headers, body: JSON.stringify(body) }).subscribe(
+      () => {
+      },
+      error => {
+        console.error('Error deleting user:', error);
+      }
+    );
   }
 
   editUser(id: number, user: string, email: string, role: string) {

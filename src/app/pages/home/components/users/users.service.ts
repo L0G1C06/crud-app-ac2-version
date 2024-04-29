@@ -10,6 +10,11 @@ export interface User {
     Role: string;
 }
 
+export interface UserRoleCount {
+    Role: string;
+    Count: number;
+  }
+
 @Injectable({
   providedIn: 'root'
 })
@@ -28,4 +33,14 @@ export class UserService {
       })
     );
   }
+
+  fetchUserRoles(): Observable<UserRoleCount[]> {
+    return this.http.get<UserRoleCount[]>('http://0.0.0.0:8000/api/v1/users/list').pipe(
+      catchError(error => {
+        console.error('Error fetching user roles:', error);
+        throw error;
+      })
+    );
+  }
+
 }
