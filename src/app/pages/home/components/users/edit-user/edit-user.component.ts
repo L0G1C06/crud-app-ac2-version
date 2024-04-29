@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-edit-user',
@@ -9,8 +10,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class EditUserComponent implements OnInit {
   edituserForm: FormGroup;
+  editUrl = 'http://0.0.0.0:8000/api/v1/user/update'
 
-  constructor(private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder) {
+  constructor(private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder, private http: HttpClient) {
     this.edituserForm = this.formBuilder.group({
       user: ['', Validators.required], 
       email: ['', [Validators.required, Validators.email]],  
@@ -24,7 +26,8 @@ export class EditUserComponent implements OnInit {
       this.edituserForm.patchValue({
         user: params['user'],
         email: params['email'],
-        role: params['role']
+        role: params['role'],
+        password: params['password']
       });
     })
   }
@@ -45,14 +48,35 @@ export class EditUserComponent implements OnInit {
     }
   }
 
-  editUser(): void {
-    if (this.edituserForm.valid) {
-      console.log('New User');
-      alert('Usuário editado com sucesso!');
-      this.router.navigate(['/app']);
+  //editUser(): void {
+  //  if (this.edituserForm.valid) {
+  //    console.log('New User');
+  //    alert('Usuário editado com sucesso!');
+  //    this.router.navigate(['/app']);
+  //  } else {
+  //    this.edituserForm.markAllAsTouched(); 
+  //    alert('Preencha corretamente todos os campos!');
+  //  }
+  //}
+  editUser(username: string, email: string, role: string, password: string){
+    const body = {username, email, role, password}
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    return this.http.put(this.editUrl, body, { headers })
+  }
+
+  onSubmit(){
+    if (this.edituserForm.valid){
+      const {user, email, role, password} = this.edituserForm.value;
+      this.editUser(user, email, role, password).subscribe(
+        () => {
+          alert('Usuário editado com sucesso!')
+          this.router.navigate(['/app']);
+        },
+      );
     } else {
-      this.edituserForm.markAllAsTouched(); 
-      alert('Preencha corretamente todos os campos!');
+      alert('Preencha corretamente todos os campos!')
     }
   }
 }

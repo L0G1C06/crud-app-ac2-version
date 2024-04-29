@@ -53,9 +53,6 @@ export class SignupComponent {
           alert('Usuário registrado com sucesso!')
           this.router.navigate(['/login']);
         },
-        () => {
-          alert('Usuário registrado com sucesso!')
-        }
       );
     } else {
       alert('Preencha corretamente todos os campos!')

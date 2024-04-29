@@ -2,7 +2,7 @@
   <div class="row justify-content-center">
     <div class="col-md-6">
       <h1 class="text-center">Editar Usuário</h1>
-      <form [formGroup]="edituserForm" (ngSubmit)="editUser()" class="mt-4">
+      <form [formGroup]="edituserForm" (ngSubmit)="onSubmit()" class="mt-4">
         <div class="form-group">
           <label for="user">Nome:</label>
           <input type="text" id="user" formControlName="user" class="form-control" required>
