@@ -3,12 +3,14 @@ package handler
 import (
 	"net/http"
 
+	"github.com/L0G1C06/crud-app/config"
 	"github.com/L0G1C06/crud-app/schemas"
 	"github.com/gin-gonic/gin"
 )
 
 func SignupHandler(ctx *gin.Context) {
 	var request SignupRequest
+
 	if err := ctx.ShouldBindJSON(&request); err != nil {
 		SendError(ctx, http.StatusBadRequest, err.Error())
 		return
@@ -27,10 +29,18 @@ func SignupHandler(ctx *gin.Context) {
 		return
 	}
 
+	// Hash the password
+	hashedPassword, err := config.HashPassword(request.Password)
+	if err != nil {
+		logger.Errorf("error hashing password: %v", err.Error())
+		SendError(ctx, http.StatusInternalServerError, "error hashing password")
+		return
+	}
+
 	signup := schemas.Signup{
 		Username: request.Username,
 		Email:    request.Email,
-		Password: request.Password,
+		Password: hashedPassword, // Use the hashed password
 	}
 
 	if err := db.Create(&signup).Error; err != nil {
