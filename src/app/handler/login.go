@@ -23,7 +23,7 @@ func LoginHandler(ctx *gin.Context) {
 		return
 	}
 
-	credentials := schemas.Credentials{}
+	credentials := schemas.Signup{}
 	if err := db.Where("username = ? AND password = ?", requestBody.Username, requestBody.Password).First(&credentials).Error; err != nil {
 		ctx.JSON(http.StatusNotFound, gin.H{"error": "username or password are incorrect"})
 		return

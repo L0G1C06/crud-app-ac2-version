@@ -20,6 +20,7 @@ func DeleteUserHandler(ctx *gin.Context) {
 
 	username := requestBody.Username
 	credentials := schemas.Credentials{}
+	signupCredentials := schemas.Signup{}
 
 	// Find User
 	if err := db.First(&credentials, "username = ?", username).Error; err != nil {
@@ -29,6 +30,18 @@ func DeleteUserHandler(ctx *gin.Context) {
 
 	// Delete User
 	if err := db.Delete(&credentials).Error; err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("error deleting user with username: %s", username)})
+		return
+	}
+
+	// Find User
+	if err := db.First(&signupCredentials, "username = ?", username).Error; err != nil {
+		ctx.JSON(http.StatusNotFound, gin.H{"error": fmt.Sprintf("User with username: %s not found", username)})
+		return
+	}
+
+	// Delete User
+	if err := db.Delete(&signupCredentials).Error; err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("error deleting user with username: %s", username)})
 		return
 	}

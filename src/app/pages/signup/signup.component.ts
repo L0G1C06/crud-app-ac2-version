@@ -50,6 +50,7 @@ export class SignupComponent {
       const {user, email, password} = this.userForm.value;
       this.signup(user, email, password).subscribe(
         () => {
+          alert('Usuário registrado com sucesso!')
           this.router.navigate(['/login']);
         },
         () => {

@@ -17,6 +17,7 @@ func InitializeRoutes(router *gin.Engine){
 	{
 		v1.POST("/user/login", handler.LoginHandler)
 		v1.POST("/user/signup", handler.SignupHandler)
+		v1.POST("/user/add", handler.AddHandler)
 		v1.DELETE("/user/delete", handler.DeleteUserHandler)
 		v1.PUT("/user/update", handler.UpdateUserHandler)
 		v1.GET("/users/list", handler.ListUsersHandler)

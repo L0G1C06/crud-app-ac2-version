@@ -8,7 +8,7 @@ import (
 )
 
 func SignupHandler(ctx *gin.Context) {
-	var request CreateCrudRequest
+	var request SignupRequest
 	if err := ctx.ShouldBindJSON(&request); err != nil {
 		SendError(ctx, http.StatusBadRequest, err.Error())
 		return
@@ -21,17 +21,16 @@ func SignupHandler(ctx *gin.Context) {
 	}
 
 	// Check if username already exists
-	existingUser := schemas.Credentials{}
+	existingUser := schemas.Signup{}
 	if err := db.Where("username = ?", request.Username).First(&existingUser).Error; err == nil {
 		SendError(ctx, http.StatusConflict, "username already exists")
 		return
 	}
 
-	signup := schemas.Credentials{
+	signup := schemas.Signup{
 		Username: request.Username,
 		Email:    request.Email,
 		Password: request.Password,
-		Role:     request.Role,
 	}
 
 	if err := db.Create(&signup).Error; err != nil {

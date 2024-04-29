@@ -36,7 +36,7 @@ type LoginResponse struct{
 
 type SignupResponse struct{
 	Message string `json:"message"`
-	Data schemas.Response `json:"data"`
+	Data schemas.SignupResponse `json:"data"`
 }
 
 type ListUsersReponse struct{
