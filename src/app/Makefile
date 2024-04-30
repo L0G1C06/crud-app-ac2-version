@@ -3,4 +3,4 @@ run_frontend:
 run_backend:
 	go run main.go 
 run_project:
-	npm start && go run main.go
+	concurrently "npm start" "go run main.go"
