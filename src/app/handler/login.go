@@ -4,14 +4,9 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"golang.org/x/crypto/bcrypt"
+	"github.com/L0G1C06/crud-app/config"
 	"github.com/L0G1C06/crud-app/schemas"
 )
-
-func CheckPasswordHash(password, hash string) bool {
-    err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
-    return err == nil
-}
 
 func LoginHandler(ctx *gin.Context) {
 	var requestBody struct {
@@ -35,7 +30,7 @@ func LoginHandler(ctx *gin.Context) {
 		return
 	}
 
-	if !CheckPasswordHash(requestBody.Password, credentials.Password) {
+	if !config.CheckPasswordHash(requestBody.Password, credentials.Password) {
 		ctx.JSON(http.StatusUnauthorized, gin.H{"error": "username or password are incorrect"})
 		return
 	}
