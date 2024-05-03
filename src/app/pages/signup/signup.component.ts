@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { error } from 'console';
 
 @Component({
   selector: 'app-signup',
@@ -53,6 +54,14 @@ export class SignupComponent {
           alert('Usuário registrado com sucesso!')
           this.router.navigate(['/login']);
         },
+        (error: HttpErrorResponse) => {
+          if (error.status === 409){
+            alert('Usuário já existe');
+          } else {
+            console.error('Erro ao registrar usuário:', error.message)
+            alert('Ocorreu um erro ao registrar o usuário. Por favor, tente novamente mais tarde.');
+          }
+        }
       );
     } else {
       alert('Preencha corretamente todos os campos!')

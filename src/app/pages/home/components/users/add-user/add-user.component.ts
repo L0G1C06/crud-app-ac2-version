@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-user',
@@ -53,8 +53,13 @@ export class AddUserComponent {
           alert('Usuário adicionado com sucesso!');
           this.router.navigate(['/app/users']);
         },
-        () => {
-          alert('Usuário adicionado com sucesso!');
+        (error: HttpErrorResponse) => {
+          if(error.status === 409){
+            alert('Usuário já existe');
+          } else {
+            console.error('Erro ao registrar usuário:', error.message)
+            alert('Ocorreu um erro ao registrar o usuário. Por favor, tente novamente mais tarde.');
+          }
         }
       );      
     } else {
