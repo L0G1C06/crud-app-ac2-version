@@ -8,6 +8,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @BasePath /api/v1
+
+// @Summary Signup User
+// @Description Create admin user
+// @Tags User
+// @Accept json
+// @Produce json
+// @Param request body SignupRequest true "Request body"
+// @Success 200 {object} SignupResponse
+// @Failure 400 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Router /user/signup [post]
 func SignupHandler(ctx *gin.Context) {
 	var request SignupRequest
 

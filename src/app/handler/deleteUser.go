@@ -8,6 +8,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @BasePath /api/v1
+
+// @Summary Delete Users
+// @Description Delete users from the app
+// @Tags User
+// @Accept json
+// @Produce json
+// @Param request body CreateCrudRequest true "Request body"
+// @Success 200 {object} DeleteUserResponse
+// @Failure 400 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Router /user/delete [delete]
 func DeleteUserHandler(ctx *gin.Context) {
 	var requestBody struct {
 		Username string `json:"username" binding:"required"`

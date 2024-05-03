@@ -7,6 +7,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @BasePath /api/v1
+
+// @Summary List Active Users
+// @Description List active users in the app
+// @Tags Users
+// @Accept json
+// @Produce json
+// @Success 200 {object} ListUsersReponse
+// @Failure 400 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Router /users/list [get]
 func ListUsersHandler(ctx *gin.Context) {
 	credentials := []schemas.Credentials{}
 

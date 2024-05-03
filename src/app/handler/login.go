@@ -8,6 +8,18 @@ import (
 	"github.com/L0G1C06/crud-app/schemas"
 )
 
+// @BasePath /api/v1
+
+// @Summary Login User
+// @Description Login user based on credentials saved on database
+// @Tags User
+// @Accept json
+// @Produce json
+// @Param request body LoginRequest true "Request body"
+// @Success 200 {object} LoginResponse
+// @Failure 400 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Router /user/login [post]
 func CheckPasswordHash(password, hash string) bool {
     err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
     return err == nil

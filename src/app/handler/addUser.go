@@ -1,4 +1,4 @@
-package handler 
+package handler
 
 import (
 	"net/http"
@@ -7,30 +7,42 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func AddHandler(ctx *gin.Context){
+// @BasePath /api/v1
+
+// @Summary Add User
+// @Description Create a new non-admin user from inside the app
+// @Tags User
+// @Accept json
+// @Produce json
+// @Param request body CreateCrudRequest true "Request body"
+// @Success 200 {object} SignupResponse
+// @Failure 400 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Router /user/add [post]
+func AddHandler(ctx *gin.Context) {
 	var request CreateCrudRequest
-	if err := ctx.ShouldBindJSON(&request); err != nil{
+	if err := ctx.ShouldBindJSON(&request); err != nil {
 		SendError(ctx, http.StatusBadRequest, err.Error())
-		return 
+		return
 	}
 
-	if err := request.Validate(); err != nil{
+	if err := request.Validate(); err != nil {
 		logger.Errorf("validation error: %v", err.Error())
 		SendError(ctx, http.StatusBadRequest, err.Error())
-		return 
+		return
 	}
 
 	addUser := schemas.Credentials{
 		Username: request.Username,
-		Email: request.Email,
+		Email:    request.Email,
 		Password: request.Password,
-		Role: request.Role,
+		Role:     request.Role,
 	}
 
-	if err := db.Create(&addUser).Error; err != nil{
+	if err := db.Create(&addUser).Error; err != nil {
 		logger.Errorf("error adding user: %v", err.Error())
 		SendError(ctx, http.StatusInternalServerError, "error adding user on database")
-		return 
+		return
 	}
 
 	SendSuccess(ctx, "add-user", addUser.Username)
