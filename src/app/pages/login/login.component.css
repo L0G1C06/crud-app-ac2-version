@@ -72,3 +72,12 @@ input[type="password"] {
 .btn-link:hover {
     text-decoration: underline;
 }
+
+.github-button {
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px; 
+    font-size: 16px; 
+    border-radius: 5px;
+    cursor: pointer; 
+}
