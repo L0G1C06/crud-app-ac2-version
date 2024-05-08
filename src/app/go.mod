@@ -3,6 +3,7 @@ module github.com/L0G1C06/crud-app
 go 1.22.2
 
 require (
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-contrib/cors v1.7.1
 	github.com/gin-gonic/gin v1.9.1
 	github.com/swaggo/files v1.0.1

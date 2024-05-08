@@ -2,11 +2,15 @@ package handler
 
 import (
 	"net/http"
+	"time"
 
+	"github.com/L0G1C06/crud-app/schemas"
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
-	"github.com/L0G1C06/crud-app/schemas"
 )
+
+var jwtKey = []byte("secret_key")
 
 // @BasePath /api/v1
 
@@ -52,5 +56,18 @@ func LoginHandler(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{"message": "login successful"})
+	expirationTime := time.Now().Add(5 * time.Minute)
+	claims := &jwt.StandardClaims{
+		ExpiresAt: expirationTime.Unix(),
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	tokenString, err := token.SignedString(jwtKey)
+
+	if err != nil{
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Could not generate token"})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{"message": "login successful", "token": tokenString})
 }

@@ -3,9 +3,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
+require('dotenv').config();
+
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
   private githubClientId = 'Ov23li9u4u8G1f38HTTR';
   private githubClientSecret = 'f1142c9bb36d3b09473a4d090ae4ece9bc0a3ad2';

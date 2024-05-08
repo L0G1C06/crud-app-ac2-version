@@ -16,6 +16,7 @@ import (
 // @Produce json
 // @Success 200 {object} ListUsersReponse
 // @Failure 400 {object} ErrorResponse
+// @Failure 401 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
 // @Router /users/list [get]
 func ListUsersHandler(ctx *gin.Context) {
