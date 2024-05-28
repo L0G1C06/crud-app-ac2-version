@@ -20,6 +20,15 @@ router.get("/list", auth, async (req, res) => {
     }
 })
 
+router.get("/count", async (req, res) => {
+    try {
+        const users = await UserModel.countDocuments()
+        return res.status(200).json({ totalUsers: users })
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+})
+
 // return amount of users sorted by role
 router.get("/roles", auth, async (req, res) => {
     try {

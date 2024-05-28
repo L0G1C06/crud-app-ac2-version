@@ -16,6 +16,7 @@ import { RouterModule } from '@angular/router';
 import { AddUserComponent } from './pages/home/components/users/add-user/add-user.component';
 import { EditUserComponent } from './pages/home/components/users/edit-user/edit-user.component';
 import { provideHttpClient, withFetch } from '@angular/common/http';
+import { TodoComponent } from './pages/home/components/users/todo/todo.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
     UsersComponent,
     WelcomeComponent,
     AddUserComponent,
-    EditUserComponent
+    EditUserComponent,
+    TodoComponent
   ],
   imports: [
     BrowserModule,

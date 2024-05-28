@@ -22,7 +22,7 @@ export class WelcomeComponent implements OnInit {
   }
 
   fetchUserCount(): void {
-    this.http.get<any>('http://0.0.0.0:8000/api/v1/users/count').subscribe(
+    this.http.get<any>('http://0.0.0.0:8000/users/count').subscribe(
       (response) => {
         this.totalUsers = response.data;
       },
