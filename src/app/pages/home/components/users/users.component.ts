@@ -1,54 +1,65 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Injectable } from '@angular/core';
-
-export interface UserByRole {
-  [key: string]: number;
-}
-
-@Injectable({
-  providedIn: 'root',
-})
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { UserService, User } from './users.service';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
+export class UsersComponent implements OnInit {
+  users: User[] = [];
+  isLoading = true;
+  deleteUrl = 'http://0.0.0.0:8000/api/v1/user/delete'
 
-export class UsersComponent {
-  users = [
-    {user: 'changeme', email: 'changeme@gmail.com', role: 'Engenheiro de FE'},
-    {user: 'changeme2', email: 'changeme2@gmail.com', role: 'Engenheiro de BE'},
-    {user: 'changeme3', email: 'changeme3@gmail.com', role: 'Analista de dados'},
-    {user: 'changeme4', email: 'changeme4@gmail.com', role: 'Lider Técnico'},
-  ]
-  
-  constructor(private router: Router) {
-    this.users = this.getUsers();
-   }
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private userService: UserService 
+  ) { }
 
-  getUsers(){
-    return this.users;
+  ngOnInit(): void {
+    this.loadUsers();
   }
 
-  getUsersByRole(): UserByRole {
-    const usersByRole: UserByRole = {};
-    this.users.forEach(user => {
-      if (!usersByRole[user.role]) {
-        usersByRole[user.role] = 1;
-      } else {
-        usersByRole[user.role]++;
+  loadUsers(): void {
+    this.userService.fetchUsers().subscribe(
+      (users: any) => {
+        console.log(users)
+        this.users = users.data;
+        this.isLoading = false;
+      },
+      error => {
+        console.error('Error fetching users:', error);
+        this.isLoading = false;
       }
+    );
+  }
+
+  removeUser(username: string) {
+    const deleteUrl = 'http://0.0.0.0:8000/api/v1/user/delete'; // Endpoint da API para excluir usuário
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
     });
-    return usersByRole;
+  
+    // Monta o corpo da requisição DELETE
+    const body = {
+      username: username
+    };
+    this.users = this.users.filter(user => user.Username !== username);
+  
+    // Envia a requisição DELETE para a API
+    this.http.delete(deleteUrl, { headers, body: JSON.stringify(body) }).subscribe(
+      () => {
+      },
+      error => {
+        console.error('Error deleting user:', error);
+      }
+    );
   }
 
-  removeUser(user: string){
-    this.users = this.users.filter(usuario => usuario.user !== user);
-  }
-
-  editUserId(user: any, email: any){
-    this.router.navigate(['/app/users/edit', { user: user, email: email}]);
+  editUser(id: number, user: string, email: string, role: string) {
+    this.router.navigate(['/app/users/edit', { id: id, user: user, email: email, role: role }]);
   }
 }

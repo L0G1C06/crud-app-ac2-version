@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-login',
@@ -9,23 +11,39 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  loginUrl = 'http://0.0.0.0:8000/api/v1/user/login';
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private http: HttpClient, private authService: AuthService) {
     this.loginForm = this.formBuilder.group({
       user: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
 
-  login() {
+  login(username: string, password: string) {
+    const body = { username, password };
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    return this.http.post(this.loginUrl, body, { headers });
+  }
+
+  loginWithGithub(){
+    this.authService.loginWithGitHub();
+  }
+
+  onSubmit() {
     if (this.loginForm.valid) {
       const { user, password } = this.loginForm.value;
-      if (user === 'admin' && password === '1234') {
-        this.router.navigate(['/app']);
-      } else {
-        alert('Usuário ou senha estão incorretos!');
-        this.resetForm();
-      }
+      this.login(user, password).subscribe(
+        () => {
+          this.router.navigate(['/app']);
+        },
+        () => {
+          alert('Usuário ou senha estão incorretos!');
+          this.resetForm();
+        }
+      );
     } else {
       alert('Por favor, preencha todos os campos.');
     }

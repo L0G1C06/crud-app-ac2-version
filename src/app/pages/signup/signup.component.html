@@ -2,7 +2,7 @@
   <div class="container">
     <div class="col-md-6">
       <h1 class="text-center">Sign Up</h1>
-      <form [formGroup]="userForm" (ngSubmit)="signup()" class="mt-4">
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="mt-4">
         <div class="form-group">
           <label for="user">Usuário:</label>
           <input type="text" id="user" formControlName="user" class="form-control" required>
@@ -25,6 +25,9 @@
         </div>
         <div class="text-center">
         <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+        </div>
+        <div class="text-center">
+          <button type="submit" class="btn btn-link" routerLink="/login">Back to Login</button>
         </div>
       </form>
     </div>

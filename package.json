@@ -21,6 +21,7 @@
     "@angular/platform-server": "^17.1.0",
     "@angular/router": "^17.1.0",
     "@angular/ssr": "^17.1.2",
+    "@auth0/angular-jwt": "^5.2.0",
     "@fortawesome/fontawesome-free": "^6.5.2",
     "bcrypt": "^5.1.1",
     "bootstrap": "^5.3.3",
@@ -28,6 +29,10 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.6.2",
     "mongoose": "^8.4.0",
+    "@types/dotenv": "^8.2.0",
+    "angular-oauth2-oidc": "^17.0.2",
+    "concurrently": "^8.2.2",
+    "dotenv": "^16.4.5",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"

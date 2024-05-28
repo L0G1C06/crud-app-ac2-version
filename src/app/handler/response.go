@@ -1,0 +1,55 @@
+package handler
+
+import (
+	"fmt"
+	"net/http"
+
+	"github.com/L0G1C06/crud-app/schemas"
+	"github.com/gin-gonic/gin"
+)
+
+func SendError(ctx *gin.Context, code int, msg string){
+	ctx.Header("Content-Type", "application/json")
+	ctx.JSON(code, gin.H{
+		"message": msg,
+		"errorCode": code,
+	})
+}
+
+func SendSuccess(ctx *gin.Context, op string, data interface{}){
+	ctx.Header("Content-Type", "application/json")
+	ctx.JSON(http.StatusOK, gin.H{
+		"message": fmt.Sprintf("operation from handler: %s successfull", op),
+		"data": data,
+	})
+}
+
+type ErrorResponse struct{
+	Message string `json:"message"`
+	ErrorCode string `json:"errorCode"`
+}
+
+type LoginResponse struct{
+	Message string `json:"message"`
+	Data schemas.Response `json:"data"`
+}
+
+type SignupResponse struct{
+	Message string `json:"message"`
+	Data schemas.SignupResponse `json:"data"`
+}
+
+type ListUsersReponse struct{
+	Message string `json:"message"`
+	Data []schemas.Response `json:"data"`
+}
+
+type UpdateUserResponse struct{
+	Message string `json:"message"`
+	Data schemas.Response `json:"data"`
+}
+
+type DeleteUserResponse struct{
+	Message string `json:"message"`
+	Data schemas.Response `json:"data"`
+}

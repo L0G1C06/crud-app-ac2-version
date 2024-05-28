@@ -4,27 +4,8 @@
             <h1>Bem-vindo</h1>
         </div>
     </div>
-</div>
-<div>
-    <h2>Quantidade de usuários: {{ lengthusers.length }}</h2>
-</div>
-<div>
-    <h2></h2>
-</div>
-<div style="overflow-x: auto; overflow-y: auto;">
-    <h2>Quantidade de usuários por função</h2>
-    <table>
-        <thead>
-          <tr>
-            <th>Função</th>
-            <th>Quantidade de Usuários</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let entry of roleusers | keyvalue">
-            <td>{{ entry.key }}</td>
-            <td>{{ entry.value }}</td>
-          </tr>
-        </tbody>
-      </table>      
-</div>
+  </div>
+  
+  <div>
+    <h2>Total de usuários cadastrados: {{ totalUsers }}</h2>
+  </div>
