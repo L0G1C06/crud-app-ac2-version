@@ -11,7 +11,7 @@ import { UserService, User } from './users.service';
 export class UsersComponent implements OnInit {
   users: User[] = [];
   isLoading = true;
-  deleteUrl = 'http://0.0.0.0:8000/api/v1/user/delete'
+  deleteUrl = 'http://0.0.0.0:8000/users/delete'
 
   constructor(
     private http: HttpClient,
@@ -38,7 +38,7 @@ export class UsersComponent implements OnInit {
   }
 
   removeUser(username: string) {
-    const deleteUrl = 'http://0.0.0.0:8000/api/v1/user/delete'; // Endpoint da API para excluir usuário
+    const deleteUrl = 'http://0.0.0.0:8000/users/delete'; // Endpoint da API para excluir usuário
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });

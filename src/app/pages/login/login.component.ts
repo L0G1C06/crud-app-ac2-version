@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-login',
@@ -11,9 +10,9 @@ import { AuthService } from './auth.service';
 })
 export class LoginComponent {
   loginForm: FormGroup;
-  loginUrl = 'http://0.0.0.0:8000/api/v1/user/login';
+  loginUrl = 'http://0.0.0.0:8000/users/login';
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private http: HttpClient, private authService: AuthService) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private http: HttpClient) {
     this.loginForm = this.formBuilder.group({
       user: ['', Validators.required],
       password: ['', Validators.required]
@@ -26,10 +25,6 @@ export class LoginComponent {
       'Content-Type': 'application/json'
     });
     return this.http.post(this.loginUrl, body, { headers });
-  }
-
-  loginWithGithub(){
-    this.authService.loginWithGitHub();
   }
 
   onSubmit() {

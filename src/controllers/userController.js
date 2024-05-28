@@ -4,93 +4,125 @@ const jwt = require('jsonwebtoken')
 const express = require('express')
 const router = express.Router()
 const auth = require("../middlewares/authentication")
-const UserModel = require("../models/user")
+const { UserModel } = require("../models/user")
+const { RoleUserModel } = require("../models/user")
 
 const JWT_SECRET = process.env.JWT_SECRET
-var users = []
 
 // AUTHENTICATED
 // return all users from database, require authentication
-router.get("/list", auth, (req, res) => {
-    return res.json(UserModel)
+router.get("/list", auth, async (req, res) => {
+    try{
+        const users = await UserModel.find({})
+        return res.status(200).json(users)
+    } catch (error){
+        return res.status(500).json({mensagem: "Erro ao busca usuários", error: error.message})
+    }
 })
 
 // edit a specific user
-router.put("/edit/:id", auth, (req, res) => {
-    var id = req.params.id
-    const { username, email, role, password} = req.body;
-    console.log(users)
+router.put('/edit/:id', auth, async (req, res) => {
+    const { id } = req.params;
+    const { username, email, role, password } = req.body;
 
-    users.map( user => {
-        if(user.id == id) {
-            user.username = username,
-            user.email = email,
-            user.role = role,
-            user.passwor = password
+    try {
+        let updateFields = { username, email, role };
+        if (password) {
+            updateFields.password = await bcryptjs.hash(password, 10);
         }
-    })
-    console.log(users)
-    console.log("Usuário editado com sucesso!")
-    return res.json({
-        mensagem: "Usuário editado com sucesso!",
-        users: users
-    })
-})
+        const user = await RoleUserModel.findByIdAndUpdate(
+            id,
+            updateFields,
+            { new: true, runValidators: true }
+        );
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        console.log("User updated successfully!");
+        return res.status(200).json({
+            message: 'User updated successfully!',
+            user: user
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Error updating user', error: error.message });
+    }
+});
 
 // create a new user
-router.post("/create", auth, (req, res) => {
-    const { username, email, role,  password } = req.body;
-    if (!username || !email || !role || !password) {
-        return res.status(400).json({
-            mensagem: "Campos obrigatórios em falta!"
-        });
-    }
-
+router.post("/create", auth, async (req, res) => {
+    const { username, email, role, password } = req.body;
+    const passwordEncrypt = await bcryptjs.hash(password, 10)
     const user = {
         username: username,
         email: email,
         role: role,
-        password: password
+        password: passwordEncrypt
     };
 
-    users.push(user);
-
-    console.log("Usuário registrado com sucesso");
-    console.log(users);
-    return res.json({
-        mensagem: "Usuário registrado com sucesso!",
-    });
+    try {
+        await RoleUserModel.create(user)
+        return res.status(201).json({
+            mensagem: "Usuário criado com sucesso"
+        })
+    } catch(error) {
+        return res.status(500).json({
+            error: error
+        })
+    }
 });
 
 // delete a specific user 
-router.delete("/delete/:id", auth, (req, res) => {
-    var id =  req.params.id 
-    console.log(users)
+router.delete("/delete/:username", auth, async (req, res) => {
+    const username = req.params.username
 
-    users = users.filter( user => {
-        return user.id != id
-    })
+    try {
+        const user = await RoleUserModel.findOneAndDelete({username: username})
 
-    console.log(users)
-    console.log("Usuário deletado com sucesso!")
-    return res.json({
-        mensagem: "Usuário deletado com sucesso!",
-    })
+        if(!user) {
+            return res.status(404).json({mensagem: "Usuário não encontrado!"})
+        }
+
+        console.log("Usuário deletado com sucesso!")
+        return res.status(200).json({mensagen: "Usuário deletado com sucesso!"})
+    } catch (error) {
+        console.error(error)
+        return res.status(500).json({mensagem: "Erro ao deletar usuário", error: error.message})
+    }
 })
 
 // return amount of users sorted by role
-router.get("/roles", auth, (req, res) => {
-    const roleCounts = users.reduce((acc, user) => {
-        acc[user.role] = (acc[user.role] || 0) + 1;
-        return acc
-    }, {})
+router.get("/roles", auth, async (req, res) => {
+    try {
+        const roleCounts = await RoleUserModel.aggregate([
+            {
+                $group: {
+                    _id: '$role',
+                    count: { $sum: 1 }
+                }
+            },
+            {
+                $sort: { count: -1 }
+            }
+        ])
 
-    const sortedRoles = Object.keys(roleCounts).sort((a, b) => roleCounts[b] - roleCounts[a])
+        const roleCountsObject = roleCounts.reduce((acc, role) => {
+            acc[role._id] = role.count
+            return acc
+        }, {})
 
-    return res.json({
-        roleCounts: roleCounts,
-        sortedRoles: sortedRoles
-    })
+        const sortedRoles = roleCounts.map(role => role._id)
+
+        return res.json({
+            roleCounts: roleCountsObject,
+            sortedRoles: sortedRoles
+        })
+    } catch (error) {
+        console.error(error)
+        return res.status(500).json({ mensagem: "Erro ao buscar a contagem de funções", error: error.message})
+    }
 })
 
 // NOT AUTHENTICATED

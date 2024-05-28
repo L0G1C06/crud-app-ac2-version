@@ -22,11 +22,11 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   getUsersCount(): Observable<number> {
-    return this.http.get<number>('http://0.0.0.0:8000/api/v1/users/count');
+    return this.http.get<number>('http://0.0.0.0:8000/users/count');
   }
 
   fetchUsers(): Observable<User[]> {
-    return this.http.get<User[]>('http://0.0.0.0:8000/api/v1/users/list').pipe(
+    return this.http.get<User[]>('http://0.0.0.0:8000/users/list').pipe(
       catchError(error => {
         console.error('Error fetching users:', error);
         throw error;
@@ -35,7 +35,7 @@ export class UserService {
   }
 
   fetchUserRoles(): Observable<UserRoleCount[]> {
-    return this.http.get<UserRoleCount[]>('http://0.0.0.0:8000/api/v1/users/list').pipe(
+    return this.http.get<UserRoleCount[]>('http://0.0.0.0:8000/users/list').pipe(
       catchError(error => {
         console.error('Error fetching user roles:', error);
         throw error;

@@ -6,4 +6,14 @@ const UserModel = mongoose.model('users', {
     password: String
 })
 
-module.exports = UserModel
+const RoleUserModel = mongoose.model('usersRole', {
+    username: String, 
+    email: String, 
+    role: String,
+    password: String
+})
+
+module.exports = {
+    UserModel,
+    RoleUserModel
+}
