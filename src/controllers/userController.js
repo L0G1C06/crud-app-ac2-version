@@ -10,13 +10,13 @@ const { RoleUserModel } = require("../models/user")
 const JWT_SECRET = process.env.JWT_SECRET
 
 // AUTHENTICATED
-// return all users from database, require authentication
+// return all users from database
 router.get("/list", auth, async (req, res) => {
     try{
         const users = await UserModel.find({})
         return res.status(200).json(users)
     } catch (error){
-        return res.status(500).json({mensagem: "Erro ao busca usuários", error: error.message})
+        return res.status(500).json({mensagem: "Erro ao buscar usuários", error: error.message})
     }
 })
 

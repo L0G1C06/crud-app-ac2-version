@@ -1,5 +1,6 @@
 const express = require('express')
 const userRouter = require('../controllers/userController')
+const taskRouter = require('../controllers/todoController')
 const mongoose = require('mongoose')
 require('dotenv').config()
 
@@ -13,6 +14,8 @@ const app = express()
 app.use(express.json())
 
 app.use('/users', userRouter)
+app.use('/todo', taskRouter)
+
 mongoose.connect(DB_URL)
 .then( () => {
     console.log("Banco de dados conectado com sucesso!")
