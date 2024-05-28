@@ -26,6 +26,7 @@
     "@types/dotenv": "^8.2.0",
     "angular-oauth2-oidc": "^17.0.2",
     "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "bootstrap": "^5.3.3",
     "concurrently": "^8.2.2",
     "dotenv": "^16.4.5",
