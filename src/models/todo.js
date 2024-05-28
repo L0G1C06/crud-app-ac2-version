@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
 
 const TaskModel = mongoose.model('tasks', {
-    taskName: String, 
-    ownerTask: String
+    taskname: String, 
+    username: String
 })
 
 module.exports = {

@@ -20,6 +20,38 @@ router.get("/list", auth, async (req, res) => {
     }
 })
 
+// return amount of users sorted by role
+router.get("/roles", auth, async (req, res) => {
+    try {
+        const roleCounts = await RoleUserModel.aggregate([
+            {
+                $group: {
+                    _id: '$role',
+                    count: { $sum: 1 }
+                }
+            },
+            {
+                $sort: { count: -1 }
+            }
+        ])
+
+        const roleCountsObject = roleCounts.reduce((acc, role) => {
+            acc[role._id] = role.count
+            return acc
+        }, {})
+
+        const sortedRoles = roleCounts.map(role => role._id)
+
+        return res.json({
+            roleCounts: roleCountsObject,
+            sortedRoles: sortedRoles
+        })
+    } catch (error) {
+        console.error(error)
+        return res.status(500).json({ mensagem: "Erro ao buscar a contagem de funções", error: error.message})
+    }
+})
+
 // edit a specific user
 router.put('/edit/:id', auth, async (req, res) => {
     const { id } = req.params;
@@ -90,38 +122,6 @@ router.delete("/delete/:username", auth, async (req, res) => {
     } catch (error) {
         console.error(error)
         return res.status(500).json({mensagem: "Erro ao deletar usuário", error: error.message})
-    }
-})
-
-// return amount of users sorted by role
-router.get("/roles", auth, async (req, res) => {
-    try {
-        const roleCounts = await RoleUserModel.aggregate([
-            {
-                $group: {
-                    _id: '$role',
-                    count: { $sum: 1 }
-                }
-            },
-            {
-                $sort: { count: -1 }
-            }
-        ])
-
-        const roleCountsObject = roleCounts.reduce((acc, role) => {
-            acc[role._id] = role.count
-            return acc
-        }, {})
-
-        const sortedRoles = roleCounts.map(role => role._id)
-
-        return res.json({
-            roleCounts: roleCountsObject,
-            sortedRoles: sortedRoles
-        })
-    } catch (error) {
-        console.error(error)
-        return res.status(500).json({ mensagem: "Erro ao buscar a contagem de funções", error: error.message})
     }
 })
 
