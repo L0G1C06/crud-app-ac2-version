@@ -1,0 +1,47 @@
+.action-button {
+    font-family: sans-serif;
+    margin-right: 5px;
+    background-color: #187f58;
+    color: #fff; 
+    border: none;
+    padding: 12px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative; 
+  }
+  .table-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+  }
+  .task-table {
+    width: 80%; /* Ajuste a largura conforme necessário */
+    border-collapse: collapse;
+    font-size: 18px;
+    text-align: left;
+  }
+
+  table{
+    color: #f1fff7;
+    font-family: sans-serif;
+    padding-left: 20px;
+  }
+  th, td {
+    font-family: sans-serif;
+    padding: 7px;
+    text-align: center;
+  }
+  th{
+    font-family: sans-serif;
+    background-color: #44b78b;
+    color: #e1efea;
+  }
+  .action-button i {
+    font-family: sans-serif;
+    position: absolute; 
+    top: 50%; 
+    left: 13px; 
+    transform: translateY(-50%);
+  }
+  

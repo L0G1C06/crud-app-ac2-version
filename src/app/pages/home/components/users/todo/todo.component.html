@@ -1,1 +1,30 @@
-<p>todo works!</p>
+<div class="table-container">
+  <table class="task-table">
+    <thead>
+      <tr>
+        <th>Título</th>
+        <th>Descrição</th>
+        <th>Ação</th>
+        <th>Owner</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of tasks">
+        <td [ngStyle]="{'text-decoration': task.done ? 'line-through' : 'none'}">
+          {{ task.title }}
+        </td>
+        <td>
+          {{ task.description }}
+        </td>
+        <td>
+          <button class="action-button" (click)="toogleDone(task)">
+            {{ task.done ? 'Desfazer' : 'Concluir' }}
+          </button>
+        </td>
+        <td>
+          {{ task.owner || '' }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
