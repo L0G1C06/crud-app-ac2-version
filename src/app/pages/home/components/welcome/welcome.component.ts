@@ -30,7 +30,7 @@ export class WelcomeComponent implements OnInit {
   }
 
   fetchUserCount(): void {
-    this.http.get<any>(`${this.baseUrl}/count`, { headers: this.getHeaders() }).subscribe(
+    this.http.get<any>(`${this.baseUrl}/count-roles`, { headers: this.getHeaders() }).subscribe(
       (response) => {
         this.totalUsers = response.totalUsers;
       },
