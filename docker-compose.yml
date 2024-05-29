@@ -1,0 +1,11 @@
+version: '3'
+services:
+  frontend:
+    image: l0g1g06/crud-app-ac2-version-front:0.1
+    ports:
+      - "4200:4200"
+
+  backend:
+    image: l0g1g06/crud-app-ac2-version-back:0.1
+    ports:
+      - "8000:8000"
