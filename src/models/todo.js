@@ -1,7 +1,9 @@
 const mongoose = require('mongoose')
 
 const TaskModel = mongoose.model('tasks', {
-    taskname: String, 
+    tasktitle: String,
+    taskdescription: String,
+    taskaction: Boolean,
     username: String
 })
 
