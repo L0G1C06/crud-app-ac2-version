@@ -48,9 +48,9 @@ export class EditUserComponent implements OnInit {
     }
   }
 
-  editUser(username: string, email: string, role: string, password: string){
+  editUser(username: string, newUsername: string, email: string, role: string, password: string){
     const token = this.getCookie('authToken')
-    const body = {username, email, role, password}
+    const body = {username, newUsername, email, role, password}
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
@@ -61,7 +61,8 @@ export class EditUserComponent implements OnInit {
   onSubmit(){
     if (this.edituserForm.valid){
       const {user, email, role, password} = this.edituserForm.value;
-      this.editUser(user, email, role, password).subscribe(
+      const username = this.route.snapshot.params['user']
+      this.editUser(username, user, email, role, password).subscribe(
         () => {
           alert('Usuário editado com sucesso!')
           this.router.navigate(['/app']);
