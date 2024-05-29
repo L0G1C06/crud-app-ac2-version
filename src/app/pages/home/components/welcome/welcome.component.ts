@@ -24,7 +24,7 @@ export class WelcomeComponent implements OnInit {
   fetchUserCount(): void {
     this.http.get<any>('http://0.0.0.0:8000/users/count').subscribe(
       (response) => {
-        this.totalUsers = response.data;
+        this.totalUsers = response.totalUsers;
       },
       (error) => {
         console.error('Error fetching user count:', error);

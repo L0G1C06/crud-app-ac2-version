@@ -10,7 +10,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angul
 })
 export class AddUserComponent {
   adduserForm: FormGroup;
-  addUrl = 'http://0.0.0.0:8000/api/v1/user/add'
+  addUrl = 'http://0.0.0.0:8000/users/create'
 
   constructor(private router: Router, private formBuilder: FormBuilder, private http: HttpClient) {
     this.adduserForm = this.formBuilder.group({
@@ -39,8 +39,10 @@ export class AddUserComponent {
 
   addUser(username: string, email: string, role: string, password: string){
     const body = {username, email, role, password}
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RlIiwiaWF0IjoxNzE2OTE3MDc5LCJleHAiOjE3MTcwODk4Nzl9.tXh404G9_30WqL_mWqwEJz4-w_0DOhQEE974fEFZDOU'
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
     });
     return this.http.post(this.addUrl, body, { headers })
   }

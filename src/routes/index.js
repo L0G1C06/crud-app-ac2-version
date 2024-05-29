@@ -2,6 +2,7 @@ const express = require('express')
 const userRouter = require('../controllers/userController')
 const taskRouter = require('../controllers/todoController')
 const mongoose = require('mongoose')
+const cors = require('cors')
 require('dotenv').config()
 
 const PORT = process.env.PORT
@@ -13,6 +14,7 @@ const DB_URL = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@be-ac2.7r4gfyp.mongodb.n
 const app = express()
 app.use(express.json())
 
+app.use(cors())
 app.use('/users', userRouter)
 app.use('/todo', taskRouter)
 

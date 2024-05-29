@@ -11,7 +11,6 @@ import { UserService, User } from './users.service';
 export class UsersComponent implements OnInit {
   users: User[] = [];
   isLoading = true;
-  deleteUrl = 'http://0.0.0.0:8000/users/delete'
 
   constructor(
     private http: HttpClient,
@@ -27,7 +26,7 @@ export class UsersComponent implements OnInit {
     this.userService.fetchUsers().subscribe(
       (users: any) => {
         console.log(users)
-        this.users = users.data;
+        this.users = users;
         this.isLoading = false;
       },
       error => {
@@ -38,16 +37,18 @@ export class UsersComponent implements OnInit {
   }
 
   removeUser(username: string) {
-    const deleteUrl = 'http://0.0.0.0:8000/users/delete'; // Endpoint da API para excluir usuário
+    const deleteUrl = `http://0.0.0.0:8000/users/delete/${username}`;
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RlIiwiaWF0IjoxNzE2OTE3MDc5LCJleHAiOjE3MTcwODk4Nzl9.tXh404G9_30WqL_mWqwEJz4-w_0DOhQEE974fEFZDOU';
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
     });
   
     // Monta o corpo da requisição DELETE
     const body = {
       username: username
     };
-    this.users = this.users.filter(user => user.Username !== username);
+    this.users = this.users.filter(user => user.username !== username);
   
     // Envia a requisição DELETE para a API
     this.http.delete(deleteUrl, { headers, body: JSON.stringify(body) }).subscribe(

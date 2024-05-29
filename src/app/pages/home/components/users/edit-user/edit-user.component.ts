@@ -10,7 +10,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class EditUserComponent implements OnInit {
   edituserForm: FormGroup;
-  editUrl = 'http://0.0.0.0:8000/api/v1/user/update'
+  editUrl = 'http://0.0.0.0:8000/users/edit'
 
   constructor(private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder, private http: HttpClient) {
     this.edituserForm = this.formBuilder.group({
@@ -48,20 +48,12 @@ export class EditUserComponent implements OnInit {
     }
   }
 
-  //editUser(): void {
-  //  if (this.edituserForm.valid) {
-  //    console.log('New User');
-  //    alert('Usuário editado com sucesso!');
-  //    this.router.navigate(['/app']);
-  //  } else {
-  //    this.edituserForm.markAllAsTouched(); 
-  //    alert('Preencha corretamente todos os campos!');
-  //  }
-  //}
   editUser(username: string, email: string, role: string, password: string){
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RlIiwiaWF0IjoxNzE2OTE3MDc5LCJleHAiOjE3MTcwODk4Nzl9.tXh404G9_30WqL_mWqwEJz4-w_0DOhQEE974fEFZDOU"
     const body = {username, email, role, password}
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
     });
     return this.http.put(this.editUrl, body, { headers })
   }

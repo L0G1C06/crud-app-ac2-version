@@ -13,6 +13,10 @@ const RoleUserModel = mongoose.model('usersRole', {
     password: String
 })
 
+RoleUserModel.schema.add({
+    newUsername: String, // Adicionando o novo campo newUsername ao esquema existente
+});
+
 module.exports = {
     UserModel,
     RoleUserModel

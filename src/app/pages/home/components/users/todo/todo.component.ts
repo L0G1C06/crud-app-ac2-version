@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import { TaskService } from './todo.service';
 
-interface Task {
+export interface Task {
   title: string
   description: string 
   done: boolean 
@@ -13,13 +14,24 @@ interface Task {
   styleUrl: './todo.component.css'
 })
 export class TodoComponent {
-  tasks: Task[] = [
-    {title: 'Tarefa 1', description: 'Description', done: false, owner: 'Alice'},
-    {title: 'Tarefa 2', description: 'Description', done: true, owner: 'Bob'},
-    {title: 'Tarefa 3', description: 'Description', done: false},
-    {title: 'Tarefa 4', description: 'Description', done: true, owner: 'Charlie'},
-    {title: 'Tarefa 5', description: 'Description', done: false, owner: 'Dana'}
-  ]
+  tasks: Task[] = []
+
+  constructor(private taskService: TaskService) {}
+
+  ngOnInit(): void {
+    this.fetchTasks();
+  }
+
+  fetchTasks(): void {
+    this.taskService.getTasks().subscribe(
+      (tasks) => {
+        this.tasks = tasks;
+      },
+      (error) => {
+        console.error('Erro ao buscar tarefas:', error);
+      }
+    );
+  }
 
   toogleDone(tasks: Task) {
     tasks.done = !tasks.done

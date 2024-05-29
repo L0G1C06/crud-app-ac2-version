@@ -11,7 +11,7 @@ import { error } from 'console';
 })
 export class SignupComponent {
   userForm: FormGroup;
-  signupUrl = 'http://0.0.0.0:8000/api/v1/user/signup'
+  signupUrl = 'http://0.0.0.0:8000/users/register'
 
   email: string = '';
   user: string = '';

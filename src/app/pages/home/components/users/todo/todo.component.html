@@ -10,7 +10,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let task of tasks">
-        <td [ngStyle]="{'text-decoration': task.done ? 'line-through' : 'none'}">
+        <td [ngStyle]="{'text-decoration': task.description ? 'line-through' : 'none'}">
           {{ task.title }}
         </td>
         <td>

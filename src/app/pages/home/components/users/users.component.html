@@ -15,14 +15,14 @@
         </thead>
         <tbody>
           <tr *ngFor="let user of users">
-            <td>{{ user.Username }}</td>
-            <td>{{ user.Email }}</td>
-            <td>{{ user.Role }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
             <td>
-              <button class="action-button" (click)="editUser(user.ID, user.Username, user.Email, user.Role)">
+              <button class="action-button" (click)="editUser(user.ID, user.username, user.email, user.role)">
                 <i class="fas fa-pencil-alt"></i> Editar
               </button>
-              <button class="action-button" (click)="removeUser(user.Username)">
+              <button class="action-button" (click)="removeUser(user.username)">
                 <i class="fas fa-times"></i>Remover
               </button>
             </td>

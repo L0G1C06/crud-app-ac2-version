@@ -13,7 +13,7 @@ const JWT_SECRET = process.env.JWT_SECRET
 // return all users from database
 router.get("/list", auth, async (req, res) => {
     try{
-        const users = await UserModel.find({})
+        const users = await RoleUserModel.find({})
         return res.status(200).json(users)
     } catch (error){
         return res.status(500).json({mensagem: "Erro ao buscar usuários", error: error.message})
@@ -62,29 +62,30 @@ router.get("/roles", auth, async (req, res) => {
 })
 
 // edit a specific user
-router.put('/edit/:id', auth, async (req, res) => {
-    const { id } = req.params;
-    const { username, email, role, password } = req.body;
+router.put('/edit', auth, async (req, res) => {
+    const { username, newUsername, email, role, password } = req.body;
 
     try {
-        let updateFields = { username, email, role };
-        if (password) {
-            updateFields.password = await bcryptjs.hash(password, 10);
-        }
-        const user = await RoleUserModel.findByIdAndUpdate(
-            id,
-            updateFields,
-            { new: true, runValidators: true }
-        );
+        const user = await RoleUserModel.findOne({ username });
 
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
 
+        user.username = newUsername || user.username;
+        user.email = email || user.email;
+        user.role = role || user.role;
+
+        if (password) {
+            user.password = await bcryptjs.hash(password, 10);
+        }
+
+        const updatedUser = await user.save();
+
         console.log("User updated successfully!");
         return res.status(200).json({
             message: 'User updated successfully!',
-            user: user
+            user: updatedUser
         });
     } catch (error) {
         console.error(error);
