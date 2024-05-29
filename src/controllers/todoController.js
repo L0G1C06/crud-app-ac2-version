@@ -82,8 +82,8 @@ router.post("/create", auth, async (req, res) => {
         task.username = username
     }
 
-    if (!tasktitle || !taskdescription || !taskaction) {
-        return res.status(400).json({ mensagem: "Os campos 'tasktitle', 'taskdescription' e 'taskaction' são obrigatórios" });
+    if (!tasktitle || !taskdescription) {
+        return res.status(400).json({ mensagem: "Os campos 'tasktitle', 'taskdescription'são obrigatórios" });
     }
 
     try {

@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { TaskService } from './todo.service';
 
 export interface Task {
-  title: string
-  description: string 
-  done: boolean 
-  owner?: string // optional 
+  tasktitle: string
+  taskdescription: string 
+  taskaction: boolean 
+  username?: string // optional 
 }
 
 @Component({
@@ -23,8 +23,8 @@ export class TodoComponent {
   }
 
   fetchTasks(): void {
-    this.taskService.getTasks().subscribe(
-      (tasks) => {
+    this.taskService.fetchTasks().subscribe(
+      (tasks: any) => {
         this.tasks = tasks;
       },
       (error) => {
@@ -34,6 +34,6 @@ export class TodoComponent {
   }
 
   toogleDone(tasks: Task) {
-    tasks.done = !tasks.done
+    tasks.taskaction = !tasks.taskaction
   }
 }

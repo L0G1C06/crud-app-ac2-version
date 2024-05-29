@@ -10,19 +10,19 @@
     </thead>
     <tbody>
       <tr *ngFor="let task of tasks">
-        <td [ngStyle]="{'text-decoration': task.description ? 'line-through' : 'none'}">
-          {{ task.title }}
+        <td [ngStyle]="{'text-decoration': task.taskaction ? 'line-through' : 'none'}">
+          {{ task.tasktitle }}
         </td>
         <td>
-          {{ task.description }}
+          {{ task.taskdescription }}
         </td>
         <td>
           <button class="action-button" (click)="toogleDone(task)">
-            {{ task.done ? 'Desfazer' : 'Concluir' }}
+            {{ task.taskaction ? 'Desfazer' : 'Concluir' }}
           </button>
         </td>
         <td>
-          {{ task.owner || '' }}
+          {{ task.username || '' }}
         </td>
       </tr>
     </tbody>
