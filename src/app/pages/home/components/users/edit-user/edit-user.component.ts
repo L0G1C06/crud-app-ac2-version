@@ -67,6 +67,13 @@ export class EditUserComponent implements OnInit {
           alert('Usuário editado com sucesso!')
           this.router.navigate(['/app']);
         },
+        (error) => {
+          if (error.status === 404) {
+            alert('Usuário não encontrado. Verifique o nome de usuário.')
+          } else {
+            alert('Ocorreu um erro ao editar o usuário. Por favor, tente novamente mais tarde.')
+          }
+        }
       );
     } else {
       alert('Preencha corretamente todos os campos!')
