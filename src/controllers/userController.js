@@ -38,9 +38,6 @@ router.get("/roles", auth, async (req, res) => {
                     _id: '$role',
                     count: { $sum: 1 }
                 }
-            },
-            {
-                $sort: { count: -1 }
             }
         ])
 
@@ -49,11 +46,8 @@ router.get("/roles", auth, async (req, res) => {
             return acc
         }, {})
 
-        const sortedRoles = roleCounts.map(role => role._id)
-
         return res.json({
-            roleCounts: roleCountsObject,
-            sortedRoles: sortedRoles
+            roleCounts: roleCountsObject
         })
     } catch (error) {
         console.error(error)
