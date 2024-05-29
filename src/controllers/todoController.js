@@ -47,6 +47,24 @@ router.put("/edit", auth, async (req, res) => {
     }
 });
 
+// PUT: update task state
+router.put("/edit-state", async (req, res) => {
+    const { taskaction } = req.body;
+
+    try {
+        if (taskaction === undefined) {
+            return res.status(400).json({ mensagem: "O campo 'taskaction' é obrigatório" });
+        }
+        
+        await TaskModel.updateMany({ taskaction: { $ne: taskaction } }, { taskaction: taskaction });
+
+        return res.status(200).json({ mensagem: "Tarefas atualizadas com sucesso" });
+    } catch (error) {
+        console.error("Erro ao atualizar as tarefas:", error);
+        return res.status(500).json({ error: error.message });
+    }
+});
+
 // DELETE: delete a specific task based on user
 router.delete("/delete", auth, async (req, res) => {
     const { username, tasktitle} = req.body

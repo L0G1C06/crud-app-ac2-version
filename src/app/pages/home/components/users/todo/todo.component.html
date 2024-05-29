@@ -17,7 +17,7 @@
           {{ task.taskdescription }}
         </td>
         <td>
-          <button class="action-button" (click)="toogleDone(task)">
+          <button class="action-button" (click)="toggleTaskState(task.tasktitle)">
             {{ task.taskaction ? 'Desfazer' : 'Concluir' }}
           </button>
         </td>

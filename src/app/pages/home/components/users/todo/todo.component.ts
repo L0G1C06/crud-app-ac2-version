@@ -33,7 +33,22 @@ export class TodoComponent {
     );
   }
 
-  toogleDone(tasks: Task) {
-    tasks.taskaction = !tasks.taskaction
+  toggleTaskState(taskTitle: string): void { 
+    const task = this.tasks.find(t => t.tasktitle === taskTitle); 
+
+    if (!task) {
+      console.error('Tarefa não encontrada:', taskTitle);
+      return;
+    }
+
+    this.taskService.updateTaskState(task.tasktitle, !task.taskaction).subscribe(
+      (response) => {
+        task.taskaction = !task.taskaction;
+        console.log('Estado da tarefa atualizado:', response);
+      },
+      (error) => {
+        console.error('Erro ao atualizar estado da tarefa:', error);
+      }
+    );
   }
 }

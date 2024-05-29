@@ -13,7 +13,7 @@ export interface Task {
     providedIn: 'root'
 })
 export class TaskService {
-    private url = 'http://localhost:8000/todo/list'
+    private baseUrl = 'http://localhost:8000/todo'
     private token = this.getCookie('authToken')
     
     private getHeaders(): HttpHeaders {
@@ -25,12 +25,25 @@ export class TaskService {
     constructor(private http: HttpClient) {}
 
     fetchTasks(): Observable<Task[]> {
-      return this.http.get<Task[]>(`${this.url}`, { headers: this.getHeaders() }).pipe(
+      return this.http.get<Task[]>(`${this.baseUrl}/list`, { headers: this.getHeaders() }).pipe(
         catchError(error => {
           console.error('Error fetching tasks:', error)
           throw error
         })
       )
+    }
+
+    updateTaskState(taskTitle: string, newTaskAction: boolean): Observable<any> {
+      const body = { taskaction: newTaskAction };
+      return this.http.put(`${this.baseUrl}/edit-state`, body, {
+        headers: this.getHeaders(),
+        params: { tasktitle: taskTitle }
+      }).pipe(
+        catchError(error => {
+          console.error('Error updating task state:', error);
+          throw error;
+        })
+      );
     }
 
     getCookie(name: string): string | null {
