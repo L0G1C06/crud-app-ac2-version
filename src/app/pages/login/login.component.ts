@@ -31,7 +31,8 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const { user, password } = this.loginForm.value;
       this.login(user, password).subscribe(
-        () => {
+        (response: any) => {
+          this.setCookie('authToken', response.token, 2)
           this.router.navigate(['/app']);
         },
         () => {
@@ -50,5 +51,11 @@ export class LoginComponent {
 
   goToSignup() {
     this.router.navigate(['/signup']);
+  }
+
+  setCookie(name: string, value: string, days: number) {
+    const expiryDate = new Date();
+    expiryDate.setDate(expiryDate.getDate() + days)
+    document.cookie = `${name}=${value}; expires=${expiryDate.toUTCString()}; path=/`
   }
 }

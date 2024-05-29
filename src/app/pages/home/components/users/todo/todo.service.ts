@@ -14,7 +14,7 @@ export interface Task {
 })
 export class TaskService {
     private url = 'http://localhost:8000/todo/list'
-    private token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RlIiwiaWF0IjoxNzE2OTI1MzYzLCJleHAiOjE3MTcwOTgxNjN9.TW6Ac9iXq2qwM6TVgH59ax_Wo8A8Dcfxy_vKJMISujA'
+    private token = this.getCookie('authToken')
     
     private getHeaders(): HttpHeaders {
       return new HttpHeaders({
@@ -31,5 +31,16 @@ export class TaskService {
           throw error
         })
       )
+    }
+
+    getCookie(name: string): string | null {
+      const nameEQ = `${name}=`;
+      const ca = document.cookie.split(';');
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+      }
+      return null;
     }
 }
