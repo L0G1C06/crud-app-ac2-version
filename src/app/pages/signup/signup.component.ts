@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { error } from 'console';
+import { HttpErrorResponse } from '@angular/common/http';
+import { SignupService } from './signup.service';
 
 @Component({
   selector: 'app-signup',
@@ -11,13 +11,12 @@ import { error } from 'console';
 })
 export class SignupComponent {
   userForm: FormGroup;
-  signupUrl = 'http://0.0.0.0:8000/users/register'
 
   email: string = '';
   user: string = '';
   password: string = '';
 
-  constructor(private router: Router, private formBuilder: FormBuilder, private http: HttpClient) {
+  constructor(private router: Router, private formBuilder: FormBuilder, private signupService: SignupService) {
     this.userForm = this.formBuilder.group({
       user: ['', Validators.required],
       email: ['', Validators.email],
@@ -38,18 +37,10 @@ export class SignupComponent {
     }
   }
 
-  signup(username: string, email: string, password: string){
-    const body = {username, email, password}
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-    return this.http.post(this.signupUrl, body, { headers })
-  }
-
   onSubmit(){
     if (this.userForm.valid){
       const {user, email, password} = this.userForm.value;
-      this.signup(user, email, password).subscribe(
+      this.signupService.signup(user, email, password).subscribe(
         () => {
           alert('Usuário registrado com sucesso!')
           this.router.navigate(['/login']);
