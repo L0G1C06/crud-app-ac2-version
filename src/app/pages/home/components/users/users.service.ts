@@ -63,8 +63,17 @@ export class UserService {
   }
 
   editUser(username: string, newUsername: string, email: string, role: string, password: string): Observable<any> {
-    const body = { username, newUsername, email, role, password}
+    const body = { username, newUsername, email, role, password }
     return this.http.put(`${this.apiUrl}/edit`, body, { headers: this.getHeaders() }).pipe(
+      catchError(error => {
+        return throwError(error)
+      })
+    )
+  }
+
+  deleteUser(username: string): Observable<any> {
+    const body = { username: username }
+    return this.http.delete(`${this.apiUrl}/delete/${username}`, { headers: this.getHeaders(), body: JSON.stringify(body) }).pipe(
       catchError(error => {
         return throwError(error)
       })

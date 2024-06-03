@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserService, User } from './users.service';
 
 @Component({
@@ -13,7 +12,6 @@ export class UsersComponent implements OnInit {
   isLoading = true;
 
   constructor(
-    private http: HttpClient,
     private router: Router,
     private userService: UserService 
   ) { }
@@ -37,25 +35,15 @@ export class UsersComponent implements OnInit {
   }
 
   removeUser(username: string) {
-    const deleteUrl = `http://0.0.0.0:8000/users/delete/${username}`;
-    const token = localStorage.getItem('authToken');
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
-    });
-  
-    const body = {
-      username: username
-    };
-    this.users = this.users.filter(user => user.username !== username);
-
-    this.http.delete(deleteUrl, { headers, body: JSON.stringify(body) }).subscribe(
+    this.userService.deleteUser(username).subscribe(
       () => {
+        this.users = this.users.filter(user => user.username !== username)
+        console.log('User deleted successfully!')
       },
-      error => {
-        console.error('Error deleting user:', error);
+      (error) => {
+        console.error('Error deleting user: ', error)
       }
-    );
+    )
   }
 
   editUser(id: number, user: string, email: string, role: string) {
