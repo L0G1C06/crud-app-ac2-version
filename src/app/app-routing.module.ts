@@ -8,21 +8,22 @@ import { WelcomeComponent } from './pages/home/components/welcome/welcome.compon
 import { AddUserComponent } from './pages/home/components/users/add-user/add-user.component';
 import { EditUserComponent } from './pages/home/components/users/edit-user/edit-user.component';
 import { TodoComponent } from './pages/home/components/users/todo/todo.component';
+import { AuthGuardService } from './auth.guard';
 
 const routes: Routes = [
   {path: "", redirectTo: "/login", pathMatch: 'full'},
   {path: "login", component: LoginComponent},
   {
-    path: "app", component: HomeComponent,
+    path: "app", component: HomeComponent, canActivate: [AuthGuardService],
     children: [
-      {path: "", component: WelcomeComponent},
-      {path: "users", component: UsersComponent},
-      {path: "users/add", component: AddUserComponent},
-      {path: "users/edit", component: EditUserComponent},
-      {path: "users/todo", component: TodoComponent}
+      {path: "", component: WelcomeComponent, canActivate: [AuthGuardService]},
+      {path: "users", component: UsersComponent, canActivate: [AuthGuardService]},
+      {path: "users/add", component: AddUserComponent, canActivate: [AuthGuardService]},
+      {path: "users/edit", component: EditUserComponent, canActivate: [AuthGuardService]},
+      {path: "users/todo", component: TodoComponent, canActivate: [AuthGuardService]}
     ]
   },
-  {path: "signup", component: SignupComponent}
+  {path: "signup", component: SignupComponent, canActivate: [AuthGuardService]}
 ];
 
 @NgModule({

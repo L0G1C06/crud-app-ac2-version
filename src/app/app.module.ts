@@ -17,6 +17,7 @@ import { AddUserComponent } from './pages/home/components/users/add-user/add-use
 import { EditUserComponent } from './pages/home/components/users/edit-user/edit-user.component';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { TodoComponent } from './pages/home/components/users/todo/todo.component';
+import { AuthGuardService } from './auth.guard';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { TodoComponent } from './pages/home/components/users/todo/todo.component
     })
   ],
   providers: [
-    provideHttpClient(withFetch())
+    provideHttpClient(withFetch()),
+    AuthGuardService
   ],
   bootstrap: [AppComponent]
 })
