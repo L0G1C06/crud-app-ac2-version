@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
+import { UserService } from '../users.service';
 
 @Component({
   selector: 'app-add-user',
@@ -10,9 +11,8 @@ import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angul
 })
 export class AddUserComponent {
   adduserForm: FormGroup;
-  addUrl = 'http://0.0.0.0:8000/users/create'
 
-  constructor(private router: Router, private formBuilder: FormBuilder, private http: HttpClient) {
+  constructor(private router: Router, private formBuilder: FormBuilder, private userService: UserService) {
     this.adduserForm = this.formBuilder.group({
       user: ['', Validators.required], 
       email: ['', [Validators.required, Validators.email]],  
@@ -37,20 +37,10 @@ export class AddUserComponent {
     }
   }
 
-  addUser(username: string, email: string, role: string, password: string){
-    const body = {username, email, role, password}
-    const token = this.getCookie('authToken')
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
-    });
-    return this.http.post(this.addUrl, body, { headers })
-  }
-
   onSubmit(){
     if(this.adduserForm.valid){
       const {user, email, role, password} = this.adduserForm.value;
-      this.addUser(user, email, role, password).subscribe(
+      this.userService.addUser(user, email, role, password).subscribe(
         () => {
           alert('Usuário adicionado com sucesso!');
           this.router.navigate(['/app/users']);
@@ -68,15 +58,4 @@ export class AddUserComponent {
       alert('Preencha corretamente todos os campos!')
     }
   }
-
-  getCookie(name: string): string | null {
-    const nameEQ = `${name}=`;
-    const ca = document.cookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-    }
-    return null;
-  } 
 }

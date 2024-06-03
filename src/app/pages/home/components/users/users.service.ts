@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 export interface User {
@@ -19,13 +19,14 @@ export interface UserRoleCount {
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://0.0.0.0:8000/users'; // Base API URL
+  private apiUrl = 'http://0.0.0.0:8000/users'; 
   private token = this.getCookie('authToken');
 
   constructor(private http: HttpClient) {}
 
   private getHeaders(): HttpHeaders {
     return new HttpHeaders({
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${this.token}`
     });
   }
@@ -50,6 +51,24 @@ export class UserService {
         throw error;
       })
     );
+  }
+
+  addUser(user: string, email: string, role: string, password: string): Observable<any> {
+    const body = { username: user, email, role, password}
+    return this.http.post(`${this.apiUrl}/create`, body, { headers: this.getHeaders() }).pipe(
+      catchError(error => {
+        return throwError(error)
+      })
+    )
+  }
+
+  editUser(username: string, newUsername: string, email: string, role: string, password: string): Observable<any> {
+    const body = { username, newUsername, email, role, password}
+    return this.http.put(`${this.apiUrl}/edit`, body, { headers: this.getHeaders() }).pipe(
+      catchError(error => {
+        return throwError(error)
+      })
+    )
   }
 
   getCookie(name: string): string | null {
