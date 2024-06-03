@@ -25,3 +25,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 4. The _frontend_ server will be running on: `http//0.0.0.0:4200`
 5. To stop the server run inside the repo folder:
     - ```docker-compose down```
+
+### Inside App
+
+Login default credentials:
+    - User: admin
+    - Password: 1234
