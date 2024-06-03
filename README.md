@@ -29,5 +29,6 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ### Inside App
 
 Login default credentials:
+    
     - User: admin
     - Password: 1234
