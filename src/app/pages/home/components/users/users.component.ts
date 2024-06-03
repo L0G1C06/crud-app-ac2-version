@@ -44,13 +44,11 @@ export class UsersComponent implements OnInit {
       Authorization: `Bearer ${token}`
     });
   
-    // Monta o corpo da requisição DELETE
     const body = {
       username: username
     };
     this.users = this.users.filter(user => user.username !== username);
-  
-    // Envia a requisição DELETE para a API
+
     this.http.delete(deleteUrl, { headers, body: JSON.stringify(body) }).subscribe(
       () => {
       },
